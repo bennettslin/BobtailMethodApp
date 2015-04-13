@@ -1,0 +1,25 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
+        <h1>About you</h1>
+      <% } else { %>
+        <h1>About <%= user.name %></h1>
+      <% } %>
+
+      <ul class="list-group">
+        <li class="list-group-item"><%= user.name %></li>
+        <li class="list-group-item"><%= user.avatar %></li>
+
+        <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
+          <li class="list-group-item"><%= user.email %></li>
+        <% } %>
+
+      </ul>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>

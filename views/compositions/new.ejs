@@ -1,0 +1,33 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+
+      <form class="form" action="/compositions" method="POST">
+        <legend>New composition</legend>
+        <div class="form-group col-sm-8">
+          <input type="text" class="form-control" name="harmony" placeholder="Input harmony">
+          <input type="text" class="form-control" name="melody" placeholder="Input melody">
+          <input type="hidden" class="form-control" name="userId" value="<%=  %>" placeholder="Input melody">
+        </div>
+        <div class="col-sm-4">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+
+      <form class="form" action="/compositions/mail" method="POST">
+        <legend>Mail composition</legend>
+        <div class="form-group col-sm-4">
+          <input type="text" class="form-control" name="email" placeholder="Email">
+        </div>
+        <div class="form-group col-sm-4">
+          <button type="submit" class="btn btn-primary">Mail</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>

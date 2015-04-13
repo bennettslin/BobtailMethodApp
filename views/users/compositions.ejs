@@ -1,0 +1,33 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+
+      <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
+        <h1>Your Compositions</h1>
+      <% } else { %>
+        <h1><%= user.name %>'s Compositions</h1>
+      <% } %>
+      <table class="table table-hover">
+        <thead>
+            <th>Melody (temp)</th>
+            <th>Harmony (temp)</th>
+            <th>Playback</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% user.compositions.forEach(function(composition) { %>
+          <tr>
+            <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
+            <td><%= composition.harmony %></td>
+            <td><a href="" data-id="<%= composition.melody %>" class="music-button btn btn-warning btn-xs"><i class="glyphicon glyphicon-music"></i></a></td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>

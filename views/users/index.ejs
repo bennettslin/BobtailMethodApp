@@ -1,0 +1,30 @@
+<% include ../partials/header %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>Users index page</h1>
+      <table class="table table-hover">
+        <thead>
+            <th>User name</th>
+            <th>User compositions</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% users.forEach(function(user) { %>
+            <tr>
+              <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
+                <td><a href="/users/<%= user.id %>"><%= user.name %></a> (you)</td>
+              <% } else { %>
+                <td><a href="/users/<%= user.id %>"><%= user.name %></a></td>
+              <% } %>
+              <td><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></td>
+            </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<% include ../partials/footer %>
