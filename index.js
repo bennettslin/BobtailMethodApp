@@ -3,6 +3,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var flash = require('connect-flash');
+var request = require('request');
 
 var app = express();
 app.set("view engine", "ejs");
@@ -37,8 +38,8 @@ app.use(function(req, res, next) {
 })
 
 app.use('/', require('./controllers/main.js'));
-app.use('/auth',require('./controllers/auth.js'));
 app.use('/compositions', require('./controllers/compositions.js'));
+app.use('/auth',require('./controllers/auth.js'));
 app.use('/critiques', require('./controllers/critiques.js'));
 app.use('/users', require('./controllers/users.js'));
 

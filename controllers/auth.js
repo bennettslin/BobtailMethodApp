@@ -70,20 +70,20 @@ router.post("/signup",function(req,res) {
     }
   }).catch(function(error) {
 
-      //handle validation errors and create flash messages
-      if (error) {
-          if (Array.isArray(error.errors)) {
-            error.errors.forEach(function(errorItem) {
-              req.flash('danger', errorItem.message);
-            });
-
-          } else {
-            req.flash('danger', 'Unknown error.');
-          }
+    //handle validation errors and create flash messages
+    if (error) {
+      if (Array.isArray(error.errors)) {
+        error.errors.forEach(function(errorItem) {
+          req.flash('danger', errorItem.message);
+        });
 
       } else {
         req.flash('danger', 'Unknown error.');
       }
+
+    } else {
+      req.flash('danger', 'Unknown error.');
+    }
 
     res.redirect("/compositions");
   })

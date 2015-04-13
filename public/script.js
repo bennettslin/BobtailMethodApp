@@ -54,4 +54,22 @@ $(function() {
       playString(name, oscillator, false);
     }, 75.0);
   };
+
+    // mail button
+  $('#envelope-button').on('click', function(event) {
+    event.preventDefault();
+    $(this).removeClass("btn-primary");
+    $(this).addClass("btn-warning");
+    $('#composition-form').addClass('test');
+    var myData = $('#composition-form').serialize();
+    $('.navbar-brand').text(myData);
+
+    $.ajax({
+      method:'POST',
+      url:"compositions/mail",
+      data:myData
+    }).done(function(data) {
+
+    });
+  })
 })

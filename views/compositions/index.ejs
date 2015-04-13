@@ -14,12 +14,12 @@
         </thead>
         <tbody>
         <% compositions.forEach(function(composition) { %>
-            <tr>
-              <td><a href="/users/<%= composition.userId %>"><%= composition.composerName %></a></td>
-              <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
-              <td><%= composition.harmony %></td>
-              <td><a href="" data-id="<%= composition.melody %>" class="music-button btn btn-warning btn-xs"><i class="glyphicon glyphicon-music"></i></a></td>
-            </tr>
+          <tr>
+            <td><a href="/users/<%= composition.userId %>"><%= composition.composerName %></a></td>
+            <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
+            <td><%= composition.harmony %></td>
+            <td><a href="" data-id="<%= composition.melody %>" class="music-button btn btn-warning btn-xs"><i class="glyphicon glyphicon-music"></i></a></td>
+          </tr>
         <% }) %>
         </tbody>
       </table>

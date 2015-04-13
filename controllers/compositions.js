@@ -39,6 +39,12 @@ router.get("/new", function(req, res) {
   res.render("compositions/new");
 });
 
+router.post("/mail", function(req, res) {
+  var email = req.body.email;
+  var body = req.body.body;
+  res.redirect("mailto:" + email + "?subject=Your%20lovely%20melody&body=" + body);
+});
+
 router.post("/", function(req, res) {
   var loggedInUser = req.getUser();
   if (loggedInUser) {
@@ -64,11 +70,6 @@ router.post("/", function(req, res) {
 
 });
 
-router.post("/mail", function(req, res) {
-  var email = req.body.email;
-  var body = req.body.body;
-  res.redirect("mailto:" + email + "?subject=Your%20lovely%20melody&body=" + body);
-});
 
 router.get("/:id", function(req, res) {
   db.composition.find(req.params.id).then(function(composition) {
