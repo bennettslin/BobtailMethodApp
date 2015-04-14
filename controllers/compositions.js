@@ -83,7 +83,9 @@ router.get("/:id", function(req, res) {
           res.render("compositions/show", {composition: composition});
         }
       });
-    })
+    }).catch(function(error) {
+      res.render("compositions/error");
+    });
   }).catch(function(error) {
     res.render("compositions/error");
   });

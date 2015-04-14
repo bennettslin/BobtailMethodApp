@@ -1,5 +1,26 @@
 $(function() {
 
+      // mail button
+  $('#record-button').on('click', function(event) {
+    event.preventDefault();
+    $(this).removeClass('btn-primary');
+    $(this).addClass('btn-warning');
+
+    var melodyString = "";
+    for (var i = 1; i <= 18; i++) {
+      // $('.cell-x-' + i + '.active').attr('data-x').removeClass('active').addClass('test');
+      var thing = $('.cell-x-' + i + '.active');
+      console.log(thing);
+      // var pitch = array[0].attr('data-x');
+      // if (pitch.isInteger()) {
+      //   melodyString = melodyString.concat(String.fromCharCode(pitch));
+      // } else {
+      //   melodyString = melodyString.concat("x");
+      // }
+    }
+    // $('.navbar-brand').text(melodyString);
+  })
+
     // notes from grid cells
   $('.cell').on("click", function(event) {
     if ($(this).hasClass('active')) {
@@ -8,10 +29,9 @@ $(function() {
       var pitch = parseInt($(this).attr('data-y'));
       $('.cell-x-' + $(this).attr('data-x')).removeClass('active');
       $(this).addClass('active');
+      var oscillator = myAudioContext.createOscillator();
+      playString(String.fromCharCode(pitch + 64), oscillator, true);
     }
-
-    var oscillator = myAudioContext.createOscillator();
-    playString(String.fromCharCode(pitch + 64), oscillator, true);
   });
 
   // navbar toggle active

@@ -32,5 +32,10 @@
 }
 
 .cell.active {
-  background-color: purple;
+  background-color: green;
+  color: white;
+}
+
+.test {
+  background-color: red;
 }

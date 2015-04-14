@@ -4,12 +4,16 @@ var router = express.Router();
 var async = require('async');
 
 router.post("/", function(req, res) {
-  var comment = req.body.comment;
-  db.composition.find(req.body.id).then(function(composition) {
-    db.critique.create({comment: req.body.comment, compositionId: composition.id, userId: 1}).then(function (critique) {
-      res.redirect("/compositions/" + composition.id);
+  if (req.user) {
+    var comment = req.body.comment;
+    db.composition.find(req.body.id).then(function(composition) {
+      db.critique.create({comment: req.body.comment, compositionId: composition.id, userId: req.user.id}).then(function (critique) {
+        res.redirect("/compositions/" + composition.id);
+      });
     });
-  });
+  } else {
+    res.redirect("/compositions/" + composition.id);
+  }
 });
 
 module.exports = router;

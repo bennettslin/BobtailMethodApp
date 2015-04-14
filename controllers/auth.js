@@ -1,6 +1,7 @@
 var db = require('../models');
 var express = require('express');
 var router = express.Router();
+var passport = require('passport');
 
 var bcrypt = require('bcrypt');
 
@@ -9,40 +10,22 @@ router.get("/login", function(req,res) {
   res.render("auth/login");
 });
 
-//process login data and login user
 router.post("/login", function(req, res) {
+  passport.authenticate('local', {badRequestMessage: "You must enter email and password."}, function(error, user, info) {
 
-    //do login here (check password and set session value)
-  db.user.find({where: {email: req.body.email}}).then(function(user) {
     if (user) {
-      bcrypt.compare(req.body.password, user.password, function(error, result) {
-        if (error) {
-          throw error;
-        }
-        if (result) {
-
-          // store user to session
-          req.session.user = {
-            id: user.id,
-            email: user.email,
-            name: user.name
-          }
-
-          // password matched
-          req.flash('success', 'Thanks for logging in, ' + user.name + '!');
-          res.redirect("/users/" + user.id);
-
-        } else {
-          req.flash('danger', 'Oops. Invalid password.');
-          res.redirect("/compositions");
-        }
-      });
+      req.login(user, function(error) {
+        if (error) throw error;
+        req.flash('success', "You are now logged in.");
+        res.redirect('/compositions');
+      })
 
     } else {
-      req.flash('danger', 'Oops. Unknown user.');
-      res.redirect("/compositions");
+      var errorMsg = info && info.message ? info.message : "Unknown error.";
+      req.flash('danger', errorMsg);
+      res.redirect('/auth/login');
     }
-  });
+  })(req, res);
 });
 
 //display sign up form
@@ -50,7 +33,7 @@ router.get("/signup",function(req,res) {
   res.render("auth/signup");
 });
 
-//create new user in database
+// //create new user in database
 router.post("/signup",function(req,res) {
 
   var userQuery = {email: req.body.email};
@@ -89,12 +72,47 @@ router.post("/signup",function(req,res) {
   })
 })
 
-//logout user
-router.get("/logout",function(req,res){
-  delete req.session.user;
-  req.flash('info','You have been logged out.')
-  res.redirect("/compositions");
+router.get("/logout", function(req, res) {
+  req.logout();
+  req.flash('info', "You have been logged out.");
+  res.redirect('/compositions');
 });
 
+var ALLOWED_PROVIDERS = ['facebook'];
+
+// oAuth login route
+router.get("/login/:provider", function(req, res) {
+  if (ALLOWED_PROVIDERS.indexOf(req.params.provider) == -1) {
+    return res.send('invalid provider url.');
+  }
+
+  passport.authenticate(
+    req.params.provider,
+    {scope:['public_profile', 'email', 'user_friends']}
+    )(req, res);
+});
+
+// oAuth callback route
+router.get("/callback/:provider", function(req, res) {
+  if (ALLOWED_PROVIDERS.indexOf(req.params.provider) == -1) {
+    return res.send('invalid provider url.');
+  }
+
+  passport.authenticate(req.params.provider, function(error, user, info) {
+
+    if (user) {
+      req.login(user, function(error) {
+        if (error) throw error;
+        req.flash('success', "You are now logged in.");
+        res.redirect('/compositions');
+      })
+
+    } else {
+      var errorMsg = info && info.message ? info.message : "Unknown error.";
+      req.flash('danger', errorMsg);
+      res.redirect('/auth/login');
+    }
+  })(req, res);
+});
 
 module.exports = router;
