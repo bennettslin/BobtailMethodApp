@@ -28,7 +28,7 @@ passport.use(new FacebookStrategy({
   callbackURL: BASE_URL + '/auth/callback/facebook'
 
 }, function(accessToken, refreshToken, profile, done) {
-  console.log("profile", JSON.stringify(profile));
+
   db.provider.find({
     where: {
       pid: profile.id,
@@ -141,7 +141,7 @@ app.get("/:invalid", function(req, res) {
   res.redirect("/");
 });
 
-var port = 3000;
+var port = process.env.PORT || 3000;
 app.listen(port, function() {
   console.log("Server is ready on port " + port + ".");
 });

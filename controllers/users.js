@@ -2,6 +2,7 @@ var db = require('../models');
 var express = require('express');
 var router = express.Router();
 var async = require('async');
+var request = require('request');
 
 router.get("/", function(req, res) {
   db.user.findAll().then(function(users) {
@@ -29,8 +30,19 @@ router.get("/:id", function(req, res) {
         if (provider.type == 'facebook') {
           var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture?type=large";
           user.picUrl = picUrl;
+          var friendsUrl = "https://graph.facebook.com/" + provider.pid + "/friends" + "?access_token=" + provider.token;
+          console.log("friends url is ", friendsUrl);
+
+          request(friendsUrl, function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+              console.log("body");
+            } else {
+              console.log("error", error, "response", response);
+            }
+            user.friends = body;
+            res.render("users/show", {user: user});
+          })
         }
-        res.render("users/show", {user: user});
 
       }).catch(function(error) {
         res.render("users/show", {user: user});
