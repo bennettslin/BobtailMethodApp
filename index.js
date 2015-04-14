@@ -23,8 +23,8 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new FacebookStrategy({
 
-  clientID: process.env.FACEBOOK_APP_ID,
-  clientSecret: process.env.FACEBOOK_APP_SECRET,
+  clientID: process.env2.FACEBOOK_APP_ID,
+  clientSecret: process.env2.FACEBOOK_APP_SECRET,
   callbackURL: BASE_URL + '/auth/callback/facebook'
 
 }, function(accessToken, refreshToken, profile, done) {
@@ -98,7 +98,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env2.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
