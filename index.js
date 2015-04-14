@@ -141,7 +141,4 @@ app.get("/:invalid", function(req, res) {
   res.redirect("/");
 });
 
-var port = process.env.PORT || 3000;
-app.listen(port, function() {
-  console.log("Server is ready on port " + port + ".");
-});
+app.listen(process.env.PORT || 3000);
