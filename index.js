@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
 var NODE_ENV = process.env.NODE_ENV || 'development';
-var BASE_URL = (NODE_ENV === 'production') ? 'https://bobtail-method-app.herokuapp.com/' : 'http://localhost:3000';
+var BASE_URL = (NODE_ENV === 'production') ? 'https://bobtail-method-app.herokuapp.com' : 'http://localhost:3000';
 
 // set up passport user serialization
 passport.serializeUser(function(user, done) {
@@ -23,8 +23,8 @@ passport.deserializeUser(function(id, done) {
 
 passport.use(new FacebookStrategy({
 
-  clientID: process.env2.FACEBOOK_APP_ID,
-  clientSecret: process.env2.FACEBOOK_APP_SECRET,
+  clientID: process.env.FACEBOOK_APP_ID,
+  clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: BASE_URL + '/auth/callback/facebook'
 
 }, function(accessToken, refreshToken, profile, done) {
@@ -98,7 +98,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(session({
-  secret: process.env2.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
