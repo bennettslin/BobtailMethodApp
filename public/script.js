@@ -1,5 +1,19 @@
 $(function() {
 
+    // notes from grid cells
+  $('.cell').on("click", function(event) {
+    if ($(this).hasClass('active')) {
+      $(this).removeClass('active');
+    } else {
+      var pitch = parseInt($(this).attr('data-y'));
+      $('.cell-x-' + $(this).attr('data-x')).removeClass('active');
+      $(this).addClass('active');
+    }
+
+    var oscillator = myAudioContext.createOscillator();
+    playString(String.fromCharCode(pitch + 64), oscillator, true);
+  });
+
   // navbar toggle active
   $(".navbar a").on("click", function() {
     // $(".navbar li").find(".active").removeClass("active");
@@ -56,11 +70,9 @@ $(function() {
   };
 
     // mail button
-  $('#envelope-button').on('click', function(event) {
+  $('#envelope-form').on('submit', function(event) {
     event.preventDefault();
-    $(this).removeClass("btn-primary");
-    $(this).addClass("btn-warning");
-    $('#composition-form').addClass('test');
+
     var myData = $('#composition-form').serialize();
     $('.navbar-brand').text(myData);
 

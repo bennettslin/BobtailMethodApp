@@ -2,10 +2,21 @@
 
 <div class="container">
   <div class="row">
+    <h1>New composition</h1>
     <div class="col-sm-12">
+      <% for (var j = 24; j >= 0; j--) { %>
+        <div class="">
+          <% for (var i = 1; i <= 18; i++) { %>
+          <% var xBin = i % 2 == 0 ? "even" : "odd"; %>
+          <% var jMod = j % 12 %>
+          <% var yBin = (jMod == 1 || jMod == 3 || jMod == 6 || jMod == 8 || jMod == 11) ? "black" : "white"; %>
+          <button data-x="<%= i %>" data-y="<%= j %>" class="btn cell cell-x-<%= i %> cell-<%= xBin %>-<%= yBin %> <%= jMod == 5 ? "cell-C" : "" %> <%= i % 6 == 0 ? "cell-bar-start" : "" %>"><%= i %>,<%= j %></button>
+          <% } %>
+          <%= pitches[j % 12] %>
+        </div>
+      <% } %>
 
       <form id="composition-form" class="form" action="/compositions" method="POST">
-        <legend>New composition</legend>
         <div class="form-group col-sm-8">
           <input type="text" class="form-control" name="harmony" placeholder="Input harmony">
           <input type="text" class="form-control" name="melody" placeholder="Input melody">
@@ -16,9 +27,9 @@
           </div>
         <% } %>
       </form>
-
-        <a id="envelope-button" class="btn btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
-
+      <form id="envelope-form" class="form" action="/compositions/mail">
+        <button type="submit" id="envelope-button" class="btn btn-primary"><i class="glyphicon glyphicon-envelope"></i></button>
+      </form>
     </div>
   </div>
 </div>

@@ -1,3 +1,36 @@
-.test {
-  background-color: red;
+.cell {
+  height: 16px;
+  width: 32px;
+  font-size: 8px;
+}
+
+.cell-C {
+  margin-bottom: 5px;
+}
+
+.cell-bar-start {
+  margin-right: 10px;
+}
+
+.cell-odd-white {
+  background-color: rgb(225, 225, 225);
+  color: black;
+}
+
+.cell-even-white {
+  background-color: rgb(200, 200, 200);
+  color: black;
+}
+
+.cell-odd-black {
+  background-color: rgb(45, 45, 45);
+  color: white;
+}
+.cell-even-black {
+  background-color: rgb(70, 70, 70);
+  color: white;
+}
+
+.cell.active {
+  background-color: purple;
 }

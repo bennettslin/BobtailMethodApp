@@ -36,12 +36,14 @@ router.get("/", function(req, res) {
 });
 
 router.get("/new", function(req, res) {
-  res.render("compositions/new");
+  var pitches = ["G", "G\u266F/A\u266D", "A", "A\u266F/B\u266D", "B", "C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D"];
+  res.render("compositions/new", {pitches: pitches});
 });
 
 router.post("/mail", function(req, res) {
   var email = req.body.email;
   var body = req.body.body;
+  console.log("redirect after post!");
   res.redirect("mailto:" + email + "?subject=Your%20lovely%20melody&body=" + body);
 });
 
