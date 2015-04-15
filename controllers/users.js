@@ -4,6 +4,22 @@ var router = express.Router();
 var async = require('async');
 var request = require('request');
 
+var getFacebookFriendUserId = function(friend, callback) {
+  db.provider.find({where: {pid: friend.id}}).then(function(provider) {
+
+    console.log("provider", provider);
+    // friend = {name: friend.name, id: friend.id};
+    console.log("friend id", friend.id, "friend name", friend.name, "pic", friend.picUrl);
+    console.log("provider userId", provider.userId, "pid", provider.pid);
+    friend.id = provider.userId;
+    var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
+    friend.picUrl = picUrl;
+    callback();
+  }).catch(function(error) {
+    callback(error);
+  })
+}
+
 var getUserPicture = function(user, callback) {
   db.provider.find({where: {userId: user.id}}).then(function(provider) {
     if (provider.type == 'facebook') {
@@ -21,6 +37,36 @@ router.get("/", function(req, res) {
     async.each(users, getUserPicture, function(error) {
       res.render("users/index", {users: users});
     });
+  });
+});
+
+router.get("/friends/:id", function(req, res) {
+  db.user.find(req.params.id).then(function(user) {
+    db.provider.find({where: {userId: user.id}}).then(function(provider) {
+      if (provider.type == 'facebook') {
+        var friendsUrl = "https://graph.facebook.com/" + provider.pid + "/friends" + "?access_token=" + provider.token;
+
+        request(friendsUrl, function (error, response, body) {
+          if (!error && response.statusCode == 200) {
+            console.log("no error, friends array");
+            var friendsArray = JSON.parse(body).data;
+            console.log("friendsArray is ", friendsArray);
+            async.each(friendsArray, getFacebookFriendUserId, function(error) {
+              user.friends = friendsArray;
+              res.render("users/friends", {user: user});
+            });
+
+          } else {
+            console.log("error, no friends!");
+            user.friends = [];
+            res.render("users/friends", {user: user});
+          }
+        })
+      }
+
+    }).catch(function(error) {
+      res.render("users/friends", {user: user});
+    })
   });
 });
 
