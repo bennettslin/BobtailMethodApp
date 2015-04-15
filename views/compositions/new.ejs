@@ -7,29 +7,10 @@
 
       <% include ../partials/grid %>
 
-      <form id="composition-form" class="form" action="/compositions" method="POST">
-        <div class="form-group col-sm-8">
-          <input type="text" class="form-control" name="harmony" placeholder="Input harmony">
-          <input type="text" class="form-control" name="melody" placeholder="Input melody">
-        </div>
-        <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
-          <div class="col-sm-4">
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </div>
-        <% } %>
-      </form>
-      <form id="envelope-form" class="form" action="/compositions/mail" method="post">
-        <input id="melody-string" type="hidden" class="form-control" name="melody-string">
-        <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
-          <input id="melody-email" type="hidden" class="form-control" name="melody-email" value="<%= loggedInUser.email %>">
-        <% } %>
-
-        <button type="submit" id="envelope-button" class="btn btn-primary"><i class="glyphicon glyphicon-envelope"></i></button>
-
-        <button id="record-button" class="btn btn-primary"><i class="glyphicon glyphicon-record"></i></button>
-        <button id="playback-button" class="btn btn-primary"><i class="glyphicon glyphicon-play"></i></button>
-      </form>
     </div>
+
+    <% include ../partials/sidebar %>
+
   </div>
 </div>
 

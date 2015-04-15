@@ -1,3 +1,8 @@
+.chord-select {
+  width: 231px;
+  float: left;
+}
+
 .cell {
   height: 16px;
   width: 32px;

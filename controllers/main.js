@@ -14,12 +14,39 @@ router.get("/about", function(req, res) {
 
 router.get("/:code", function(req, res) {
   var code = req.params.code.toUpperCase();
+  var keys = [];
+  var chords = [];
   var pitches = [];
-  if (code.length < 18) {
+  if (code.length < 24) {
     res.redirect("/");
   } else {
+
+    // FIXME: refactor when time permits
     var codeIsLegitimate = true;
-    for (var i = 0; i < 18; i++) {
+    for (var i = 0; i < 6; i++) {
+
+      // it's a key
+      if (i % 2 == 0) {
+        var key = code.charCodeAt(i) - 65;
+        if (!isNaN(key) && key >= 0 && key < 12) {
+          keys.push(key);
+        } else {
+          codeIsLegitimate = false;
+        }
+
+        // it's a chord
+      } else {
+        var chord = code.charCodeAt(i) - 65;
+        if (!isNaN(chord) && chord >= 0 && chord < 4) {
+          chords.push(chord);
+        } else {
+          codeIsLegitimate = false;
+        }
+      }
+    }
+
+    for (var i = 6; i < 24; i++) {
+
       if (code[i] == '-') {
         pitches.push(code[i]);
       } else {
@@ -33,7 +60,7 @@ router.get("/:code", function(req, res) {
     }
 
     if (codeIsLegitimate) {
-      res.render("compositions/code", {activePitches: pitches});
+      res.render("compositions/code", {activePitches: pitches, keys: keys, activeChords: chords});
     } else {
       res.redirect("/");
     }

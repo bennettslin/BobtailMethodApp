@@ -1,11 +1,31 @@
 <% var pitches = ["G", "G\u266F/A\u266D", "A", "A\u266F/B\u266D", "B", "C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D"]; %>
+<% var chords = ["major", "minor", "augmented", "diminished"]; %>
+
+<% for (var i = 0; i < 3; i++) { %>
+  <div class="chord-select %>">
+
+    <select class="select-key-<%= i %>" <%=(typeof keys != "undefined" ? "disabled" : "") %> data-key="<%= i %>">
+      <% for (var j = 0; j < 12; j++) { %>
+      <option <%=(typeof keys != "undefined" && keys[i] == j ? "selected" : "") %> value="<%= j %>"><%= pitches[(j + 5) % 12] %></option>
+      <% } %>
+    </select>
+
+    <select class="select-chord-<%= i %>" <%=(typeof activeChords != "undefined" ? "disabled" : "") %> data-chord="<%= i %>">
+      <% for (var j = 0; j < 4; j++) { %>
+        <option <%=(typeof activeChords != "undefined" && activeChords[i] == j ? "selected" : "") %> value="<%= j %>"><%= chords[j] %></option>
+      <% } %>
+    </select>
+  </div>
+<% } %>
+<hr>
+
 <% for (var j = 24; j >= 0; j--) { %>
   <div class="">
     <% for (var i = 1; i <= 18; i++) { %>
     <% var xBin = i % 2 == 0 ? "even" : "odd"; %>
     <% var jMod = j % 12 %>
     <% var yBin = (jMod == 1 || jMod == 3 || jMod == 6 || jMod == 8 || jMod == 11) ? "black" : "white"; %>
-    <a data-x="<%= i %>" data-y="<%= j %>" class="btn cell cell-x-<%= i %> cell-<%= xBin %>-<%= yBin %> <%= jMod == 5 ? "cell-C" : "" %> <%= i % 6 == 0 ? "cell-bar-start" : "" %> <%=(typeof activePitches != "undefined" && activePitches[i - 1] == j ? "active" : "") %>"></a>
+    <a data-x="<%= i %>" data-y="<%= j %>" class="btn cell cell-x-<%= i %> cell-<%= xBin %>-<%= yBin %> <%= jMod == 5 ? "cell-C" : "" %> <%= i % 6 == 0 ? "cell-bar-start" : "" %> <%=(typeof activePitches != "undefined" && activePitches[i - 1] == j ? "active" : "") %> <%=(typeof activePitches != "undefined" ? "locked" : "") %>"></a>
     <% } %>
     <%= pitches[j % 12] %>
   </div>

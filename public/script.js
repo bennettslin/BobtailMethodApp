@@ -1,7 +1,16 @@
 $(function() {
 
-  var getMelodyString = function() {
+  var getMailString = function() {
     var myString = "";
+
+    for (var i = 0; i < 3; i++) {
+      var myKey = parseInt($('.select-key-' + i).val());
+      myString = myString.concat(String.fromCharCode(myKey + 65));
+
+      var myChord = parseInt($('.select-chord-' + i).val());
+      myString = myString.concat(String.fromCharCode(myChord + 65));
+    }
+
     for (var i = 1; i <= 18; i++) {
       var myPitch = parseInt($('.cell-x-' + i + '.active').attr('data-y'));
       if (isNaN(myPitch) || (myPitch < 0 || myPitch > 24)) {
@@ -14,38 +23,39 @@ $(function() {
   };
 
       // record button
-  $('#record-button').on('click', function(event) {
-    event.preventDefault();
-    $(this).removeClass('btn-primary');
-    $(this).addClass('btn-warning');
-    $('.navbar-brand').text(getMelodyString());
-  })
+  // $('#record-button').on('click', function(event) {
+  //   event.preventDefault();
+  //   $(this).removeClass('btn-primary');
+  //   $(this).addClass('btn-warning');
+  //   $('.navbar-brand').text(getMailString());
+  // })
 
       // mail button
   $('#envelope-form').on('submit', function(event) {
-
-    var melodyString = getMelodyString();
-    $('#melody-string').val(melodyString);
+    var mailString = getMailString();
+    $('#melody-string').val(mailString);
   })
 
     // notes from grid cells
   $('.cell').on("click", function(event) {
-    if ($(this).hasClass('active')) {
-      $(this).removeClass('active');
-    } else {
-      var pitch = parseInt($(this).attr('data-y'));
-      $('.cell-x-' + $(this).attr('data-x')).removeClass('active');
-      $(this).addClass('active');
-      var oscillator = myAudioContext.createOscillator();
-      playString(String.fromCharCode(pitch + 64), oscillator, true);
+    if (!$(this).hasClass('locked')) {
+      if ($(this).hasClass('active')) {
+        $(this).removeClass('active');
+      } else {
+        var pitch = parseInt($(this).attr('data-y'));
+        $('.cell-x-' + $(this).attr('data-x')).removeClass('active');
+        $(this).addClass('active');
+        var oscillator = myAudioContext.createOscillator();
+        playString(String.fromCharCode(pitch + 64), oscillator, true);
+      }
     }
   });
 
-  // navbar toggle active
-  $(".navbar a").on("click", function() {
+  // navbar toggle active (doesn't seem to work!)
+  // $(".navbar a").on("click", function() {
     // $(".navbar li").find(".active").removeClass("active");
-    $(this).parent().addClass("active");
-  });
+    // $(this).parent().addClass("active");
+  // });
 
   // audio context
   var myAudioContext = new AudioContext();
@@ -59,6 +69,7 @@ $(function() {
 
   // notes from pressed keys
   $(this).on("keydown", function(event) {
+
     var oscillator = myAudioContext.createOscillator();
     playString(String.fromCharCode(event.which + 32), oscillator, true);
   });
