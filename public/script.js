@@ -1,24 +1,31 @@
 $(function() {
 
-      // mail button
+  var getMelodyString = function() {
+    var myString = "";
+    for (var i = 1; i <= 18; i++) {
+      var myPitch = parseInt($('.cell-x-' + i + '.active').attr('data-y'));
+      if (isNaN(myPitch) || (myPitch < 0 || myPitch > 24)) {
+        myString = myString.concat("-");
+      } else {
+        myString = myString.concat(String.fromCharCode(myPitch + 65));
+      }
+    }
+    return myString;
+  };
+
+      // record button
   $('#record-button').on('click', function(event) {
     event.preventDefault();
     $(this).removeClass('btn-primary');
     $(this).addClass('btn-warning');
+    $('.navbar-brand').text(getMelodyString());
+  })
 
-    var melodyString = "";
-    for (var i = 1; i <= 18; i++) {
-      // $('.cell-x-' + i + '.active').attr('data-x').removeClass('active').addClass('test');
-      var thing = $('.cell-x-' + i + '.active');
-      console.log(thing);
-      // var pitch = array[0].attr('data-x');
-      // if (pitch.isInteger()) {
-      //   melodyString = melodyString.concat(String.fromCharCode(pitch));
-      // } else {
-      //   melodyString = melodyString.concat("x");
-      // }
-    }
-    // $('.navbar-brand').text(melodyString);
+      // mail button
+  $('#envelope-form').on('submit', function(event) {
+
+    var melodyString = getMelodyString();
+    $('#melody-string').val(melodyString);
   })
 
     // notes from grid cells
@@ -90,18 +97,18 @@ $(function() {
   };
 
     // mail button
-  $('#envelope-form').on('submit', function(event) {
-    event.preventDefault();
+  // $('#envelope-form').on('submit', function(event) {
+  //   event.preventDefault();
 
-    var myData = $('#composition-form').serialize();
-    $('.navbar-brand').text(myData);
+  //   var myData = $('#composition-form').serialize();
+  //   $('.navbar-brand').text(myData);
 
-    $.ajax({
-      method:'POST',
-      url:"compositions/mail",
-      data:myData
-    }).done(function(data) {
+  //   $.ajax({
+  //     method:'POST',
+  //     url:"compositions/mail",
+  //     data:myData
+  //   }).done(function(data) {
 
-    });
-  })
+  //   });
+  // })
 })

@@ -117,7 +117,6 @@ app.use(function(req, res, next) {
 app.use(function(req, res, next) {
   if (req.user && !req.user.picUrl) {
     db.provider.find({where: {userId: req.user.id}}).then(function(provider) {
-      console.log("this gets called");
       if (provider.type == 'facebook') {
         var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture?type=large";
         req.user.picUrl = picUrl;

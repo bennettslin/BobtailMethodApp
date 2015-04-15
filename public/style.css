@@ -1,7 +1,5 @@
-.thumbnail-avatar {
-  height: 24px;
-  width: 24px;
-  border-radius: 3px;
+.admin-button {
+  background-color: pink;
 }
 
 .cell {

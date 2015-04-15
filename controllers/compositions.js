@@ -8,7 +8,7 @@ var addComposerName = function(composition, callback) {
     composition.composerName = user.name;
     db.provider.find({where: {userId: user.id}}).then(function(provider) {
       if (provider.type == 'facebook') {
-        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture?type=large";
+        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
         composition.picUrl = picUrl;
         callback();
       }
@@ -26,7 +26,7 @@ var addCriticName = function(critique, callback) {
     critique.criticName = user.name;
     db.provider.find({where: {userId: user.id}}).then(function(provider) {
       if (provider.type == 'facebook') {
-        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture?type=large";
+        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
         critique.picUrl = picUrl;
         callback();
       }
@@ -40,15 +40,20 @@ var addCriticName = function(critique, callback) {
 }
 
 router.get("/", function(req, res) {
-  db.composition.findAll().then(function(compositions) {
-    async.each(compositions, addComposerName, function(error) {
-      if (!error) {
-        res.render("compositions/index", {compositions: compositions});
-      } else {
-        // handle error
-      }
+  var loggedInUser = req.user;
+  if (typeof loggedInUser != "undefined" && loggedInUser.id == 1) {
+    db.composition.findAll().then(function(compositions) {
+      async.each(compositions, addComposerName, function(error) {
+        if (!error) {
+          res.render("compositions/index", {compositions: compositions});
+        } else {
+          // handle error
+        }
+      });
     });
-  });
+  } else {
+    res.redirect("/");
+  }
 });
 
 router.get("/new", function(req, res) {
@@ -57,10 +62,9 @@ router.get("/new", function(req, res) {
 });
 
 router.post("/mail", function(req, res) {
-  var email = req.body.email;
-  var body = req.body.body;
-  console.log("redirect after post!");
-  res.redirect("mailto:" + email + "?subject=Your%20lovely%20melody&body=" + body);
+  var melodyString = req.body["melody-string"];
+  var email = req.body["melody-email"] || "";
+  res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=" + melodyString);
 });
 
 router.post("/", function(req, res) {
@@ -78,12 +82,12 @@ router.post("/", function(req, res) {
 
     }).catch(function(error) {
       req.flash("danger", "You must save this composition under your own account.");
-      res.redirect("/compositions");
+      res.redirect("/");
     });
 
   } else {
     req.flash("danger", "You cannot save a composition without being logged in.");
-    res.redirect("/compositions");
+    res.redirect("/");
   }
 
 });

@@ -4,8 +4,8 @@ var router = express.Router();
 var async = require('async');
 
 router.get("/", function(req, res) {
-
-  res.redirect("/compositions");
+  res.render("main/index");
+  // res.redirect("/compositions");
 });
 
 router.get("/about", function(req, res) {

@@ -27,7 +27,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
-        <li><a href="/users">All Users (admin only)</a></li>
+        <% if (typeof loggedInUser != 'undefined' && loggedInUser.id == 1) { %>
+          <li><a href="/users" class="admin-button">All Users</a></li>
+          <li><a href="/compositions" class="admin-button">All Compositions</a></li>
+        <% } %>
+
         <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
           <li><a href="/users/compositions/<%= loggedInUser.id %>">My Compositions</a></li>
           <li><a href="/users/friends/<%= loggedInUser.id %>">My Friends</a></li>

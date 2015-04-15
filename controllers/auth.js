@@ -17,7 +17,7 @@ router.post("/login", function(req, res) {
       req.login(user, function(error) {
         if (error) throw error;
         req.flash('success', "You are now logged in.");
-        res.redirect('/compositions');
+        res.redirect('/');
       })
 
     } else {
@@ -75,7 +75,7 @@ router.post("/signup",function(req,res) {
 router.get("/logout", function(req, res) {
   req.logout();
   req.flash('info', "You have been logged out.");
-  res.redirect('/compositions');
+  res.redirect('/');
 });
 
 var ALLOWED_PROVIDERS = ['facebook'];
@@ -104,7 +104,7 @@ router.get("/callback/:provider", function(req, res) {
       req.login(user, function(error) {
         if (error) throw error;
         req.flash('success', "You are now logged in.");
-        res.redirect('/compositions');
+        res.redirect('/');
       })
 
     } else {

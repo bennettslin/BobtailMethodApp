@@ -1,7 +1,13 @@
-<% if (typeof alerts != 'undefined') { %>
-  <% for (key in alerts) { %>
-    <% alerts[key].forEach(function(message) { %>
-      <div class="alert alert-<%= key %>"><%= message %></div>
-    <% }); %>
-  <% } %>
-<% } %>
+
+<div class="container">
+  <div class="row">
+
+    <% if (typeof alerts != 'undefined') { %>
+      <% for (key in alerts) { %>
+        <% alerts[key].forEach(function(message) { %>
+          <div class="col-sm-8 col-sm-offset-2 alert alert-<%= key %>"><%= message %></div>
+        <% }); %>
+      <% } %>
+    <% } %>
+  </div>
+</div>

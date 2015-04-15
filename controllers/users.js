@@ -29,11 +29,16 @@ var getUserPicture = function(user, callback) {
 }
 
 router.get("/", function(req, res) {
-  db.user.findAll().then(function(users) {
-    async.each(users, getUserPicture, function(error) {
-      res.render("users/index", {users: users});
+  var loggedInUser = req.user;
+  if (typeof loggedInUser != "undefined" && loggedInUser.id == 1) {
+    db.user.findAll().then(function(users) {
+      async.each(users, getUserPicture, function(error) {
+        res.render("users/index", {users: users});
+      });
     });
-  });
+  } else {
+    res.redirect("/");
+  }
 });
 
 router.get("/friends/:id", function(req, res) {
