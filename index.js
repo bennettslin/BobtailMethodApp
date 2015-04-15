@@ -115,8 +115,23 @@ app.use(function(req, res, next) {
 })
 
 app.use(function(req, res, next) {
-  res.locals.loggedInUser = req.user;
-  next();
+  if (req.user && !req.user.picUrl) {
+    db.provider.find({where: {userId: req.user.id}}).then(function(provider) {
+      console.log("this gets called");
+      if (provider.type == 'facebook') {
+        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture?type=large";
+        req.user.picUrl = picUrl;
+        res.locals.loggedInUser = req.user;
+        next();
+      }
+    }).catch(function(error) {
+      res.locals.loggedInUser = req.user;
+      next();
+    });
+  } else {
+    res.locals.loggedInUser = req.user;
+    next();
+  }
 })
 
 // for Facebook

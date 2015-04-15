@@ -3,9 +3,10 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-      <h1>Users index page</h1>
+      <h1>All the users</h1>
       <table class="table table-hover">
         <thead>
+            <th>user avatar</th>
             <th>User name</th>
             <th>User compositions</th>
           </tr>
@@ -13,6 +14,12 @@
         <tbody>
         <% users.forEach(function(user) { %>
             <tr>
+              <% if (user.picUrl) { %>
+                <td><img class="thumbnail-avatar" src="<%= user.picUrl %>"></td>
+              <% } else { %>
+                <td></td>
+              <% } %>
+
               <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
                 <td><a href="/users/<%= user.id %>"><%= user.name %></a> (you)</td>
               <% } else { %>

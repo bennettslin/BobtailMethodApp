@@ -6,7 +6,15 @@ var async = require('async');
 var addComposerName = function(composition, callback) {
   db.user.find(composition.userId).then(function(user) {
     composition.composerName = user.name;
-    callback();
+    db.provider.find({where: {userId: user.id}}).then(function(provider) {
+      if (provider.type == 'facebook') {
+        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture?type=large";
+        composition.picUrl = picUrl;
+        callback();
+      }
+    }).catch(function(error) {
+      callback(error);
+    })
 
   }).catch(function(error) {
     callback(error);
@@ -16,7 +24,15 @@ var addComposerName = function(composition, callback) {
 var addCriticName = function(critique, callback) {
   db.user.find(critique.userId).then(function(user) {
     critique.criticName = user.name;
-    callback();
+    db.provider.find({where: {userId: user.id}}).then(function(provider) {
+      if (provider.type == 'facebook') {
+        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture?type=large";
+        critique.picUrl = picUrl;
+        callback();
+      }
+    }).catch(function(error) {
+      callback(error);
+    })
 
   }).catch(function(error) {
     callback(error);
@@ -48,7 +64,7 @@ router.post("/mail", function(req, res) {
 });
 
 router.post("/", function(req, res) {
-  var loggedInUser = req.getUser();
+  var loggedInUser = req.user;
   if (loggedInUser) {
     db.user.find(loggedInUser.id).then(function(user) {
 
@@ -72,7 +88,6 @@ router.post("/", function(req, res) {
 
 });
 
-
 router.get("/:id", function(req, res) {
   db.composition.find(req.params.id).then(function(composition) {
     db.critique.findAll({where: {compositionId: composition.id}}).then(function(critiques) {
@@ -80,9 +95,22 @@ router.get("/:id", function(req, res) {
       async.each(critiques, addCriticName, function(error) {
         if (!error) {
           composition.critiques = critiques;
-          res.render("compositions/show", {composition: composition});
+          db.user.find(composition.userId).then(function(user) {
+            composition.composerName = user.name;
+            db.provider.find({where: {userId: user.id}}).then(function(provider) {
+              if (provider.type == 'facebook') {
+                var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
+                composition.picUrl = picUrl;
+                res.render("compositions/show", {composition: composition});
+              }
+
+            }).catch(function(error) {
+              res.render("compositions/show", {composition: composition});
+            })
+          })
         }
       });
+
     }).catch(function(error) {
       res.render("compositions/error");
     });

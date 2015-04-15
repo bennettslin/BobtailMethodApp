@@ -1,3 +1,9 @@
+.thumbnail-avatar {
+  height: 24px;
+  width: 24px;
+  border-radius: 3px;
+}
+
 .cell {
   height: 16px;
   width: 32px;

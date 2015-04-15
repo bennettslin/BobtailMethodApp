@@ -4,9 +4,23 @@ var router = express.Router();
 var async = require('async');
 var request = require('request');
 
+var getUserPicture = function(user, callback) {
+  db.provider.find({where: {userId: user.id}}).then(function(provider) {
+    if (provider.type == 'facebook') {
+      var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
+      user.picUrl = picUrl;
+      callback();
+    }
+  }).catch(function(error) {
+    callback(error);
+  })
+}
+
 router.get("/", function(req, res) {
   db.user.findAll().then(function(users) {
-    res.render("users/index", {users: users});
+    async.each(users, getUserPicture, function(error) {
+      res.render("users/index", {users: users});
+    });
   });
 });
 
@@ -15,7 +29,16 @@ router.get("/compositions/:id", function(req, res) {
     db.composition.findAll({where: {userId: user.id}}).then(function(compositions) {
       compositions = compositions || [];
       user.compositions = compositions;
-      res.render("users/compositions", {user: user});
+      db.provider.find({where: {userId: user.id}}).then(function(provider) {
+        if (provider.type == 'facebook') {
+          var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
+          user.picUrl = picUrl;
+          res.render("users/compositions", {user: user});
+        }
+
+      }).catch(function(error) {
+        res.render("users/compositions", {user: user});
+      })
     })
   });
 });

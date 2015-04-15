@@ -3,16 +3,17 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-      <h1>Compositions show page</h1>
-      <ul class="list-group">
-        <li class="list-group-item">Melody: <%= composition.melody %></li>
-        <li class="list-group-item">Harmony: <%= composition.harmony %></li>
-      </ul>
+      <% if (composition.picUrl) { %>
+        <img src="<%= composition.picUrl %>">
+      <% } %>
+
+      <h1><%= composition.composerName %>'s composition: <%= composition.melody %>/<%= composition.harmony %></h1>
       <a href="" data-id="<%= composition.melody %>" class="music-button btn btn-warning btn-xs"><i class="glyphicon glyphicon-music"></i></a>
       <h1>Critiques</h1>
       <table class="table table-hover">
         <thead>
           <tr>
+            <th>Avatar</th>
             <th>Critic</th>
             <th>Comment</th>
             <th>Date</th>
@@ -21,6 +22,11 @@
         <tbody>
         <% composition.critiques.forEach(function(critique) { %>
           <tr>
+            <% if (critique.picUrl) { %>
+              <td><img class="thumbnail-avatar" src="<%= critique.picUrl %>"></td>
+            <% } else { %>
+              <td></td>
+            <% } %>
             <td><a href="/users/<%= critique.userId %>"><%= critique.criticName %></a></td>
             <td><%= critique.comment %></td>
             <td><%= critique.createdAt %></td>

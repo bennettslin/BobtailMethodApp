@@ -44,10 +44,11 @@
         <li><a href="/about">About Bobtail Method</a></li>
 
         <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
+
           <li><a href="/users/<%= loggedInUser.id %>" class="btn btn-info"><i class="glyphicon glyphicon-user"></i> <%= typeof loggedInUser.name === 'string' ? loggedInUser.name : 'Unknown' %></a></li>
-          <li><a href="/auth/logout" class="btn btn-warning">Log out</a></li>
+          <li><a href="/auth/logout" class="btn">Log out</a></li>
         <% } else { %>
-          <li><a href="/auth/login" class="btn btn-primary"><i class="glyphicon glyphicon-user"></i>Log in</a></li>
+          <li><a href="/auth/login" class="btn"><i class="glyphicon glyphicon-user"> </i>Log in</a></li>
           <li><a href="/auth/signup" class="btn btn-success">Sign up</a></li>
         <% } %>
       </ul>

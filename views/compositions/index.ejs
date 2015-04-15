@@ -3,9 +3,10 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-      <h1>Compositions index page</h1>
+      <h1>All the compositions ever</h1>
       <table class="table table-hover">
         <thead>
+            <th>Avatar</th>
             <th>Composer name</th>
             <th>Melody (temp)</th>
             <th>Harmony (temp)</th>
@@ -15,6 +16,11 @@
         <tbody>
         <% compositions.forEach(function(composition) { %>
           <tr>
+            <% if (composition.picUrl) { %>
+              <td><img class="thumbnail-avatar" src="<%= composition.picUrl %>"></td>
+            <% } else { %>
+              <td></td>
+            <% } %>
             <td><a href="/users/<%= composition.userId %>"><%= composition.composerName %></a></td>
             <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
             <td><%= composition.harmony %></td>

@@ -3,11 +3,13 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
-
+      <% if (user.picUrl) { %>
+        <img src="<%= user.picUrl %>">
+      <% } %>
       <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
-        <h1><%= user.name %>'s Compositions (you)</h1>
+        <h1>All of <%= user.name %>'s compositions (you)</h1>
       <% } else { %>
-        <h1><%= user.name %>'s Compositions</h1>
+        <h1>All of <%= user.name %>'s compositions</h1>
       <% } %>
       <table class="table table-hover">
         <thead>
