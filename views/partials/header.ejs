@@ -28,8 +28,8 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
         <% if (typeof loggedInUser != 'undefined' && loggedInUser.id == 1) { %>
-          <li><a href="/users" class="admin-button">All Users</a></li>
-          <li><a href="/compositions" class="admin-button">All Compositions</a></li>
+          <li><a href="/users" class="btn btn-warning">All Users</a></li>
+          <li><a href="/compositions" class="btn btn-warning">All Compositions</a></li>
         <% } %>
 
         <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>

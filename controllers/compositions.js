@@ -57,14 +57,17 @@ router.get("/", function(req, res) {
 });
 
 router.get("/new", function(req, res) {
-  var pitches = ["G", "G\u266F/A\u266D", "A", "A\u266F/B\u266D", "B", "C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D"];
-  res.render("compositions/new", {pitches: pitches});
+  res.render("compositions/new");
+});
+
+router.get("/code", function(req, res) {
+  res.render("compositions/code");
 });
 
 router.post("/mail", function(req, res) {
   var melodyString = req.body["melody-string"];
   var email = req.body["melody-email"] || "";
-  res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=" + melodyString);
+  res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=%0D" + Array(56).join("_") + "%0D%0Dhttp://bobtail-method-app.herokuapp.com/" + melodyString + "/" + "%0A" + Array(56).join("_"));
 });
 
 router.post("/", function(req, res) {

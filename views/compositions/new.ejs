@@ -4,17 +4,8 @@
   <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
       <h1>New composition</h1>
-      <% for (var j = 24; j >= 0; j--) { %>
-        <div class="">
-          <% for (var i = 1; i <= 18; i++) { %>
-          <% var xBin = i % 2 == 0 ? "even" : "odd"; %>
-          <% var jMod = j % 12 %>
-          <% var yBin = (jMod == 1 || jMod == 3 || jMod == 6 || jMod == 8 || jMod == 11) ? "black" : "white"; %>
-          <a data-x="<%= i %>" data-y="<%= j %>" class="btn cell cell-x-<%= i %> cell-<%= xBin %>-<%= yBin %> <%= jMod == 5 ? "cell-C" : "" %> <%= i % 6 == 0 ? "cell-bar-start" : "" %>"><%= i %>,<%= j %></a>
-          <% } %>
-          <%= pitches[j % 12] %>
-        </div>
-      <% } %>
+
+      <% include ../partials/grid %>
 
       <form id="composition-form" class="form" action="/compositions" method="POST">
         <div class="form-group col-sm-8">
