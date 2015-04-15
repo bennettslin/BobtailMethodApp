@@ -15,9 +15,9 @@
         <% user.friends.forEach(function(friend) { %>
             <tr>
               <% if (friend.picUrl) { %>
-                <td><img class="thumbnail-avatar" src="<%= friend.picUrl %>"><%= friend.picUrl %></td>
+                <td><img class="thumbnail-avatar" src="<%= friend.picUrl %>"></td>
               <% } else { %>
-                <td><%= friend.picUrl %></td>
+                <td></td>
               <% } %>
 
               <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == friend.email) { %>

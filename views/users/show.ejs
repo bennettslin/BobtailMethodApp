@@ -17,11 +17,6 @@
           <li class="list-group-item"><img src="<%= user.picUrl %>"></li>
         <% } %>
 
-        <% if (user.friends) { %>
-          <!-- <li class="list-group-item"><a href="<%= user.friends %>">friends</a></li> -->
-          <li class="list-group-item"><%= user.friends %></li>
-        <% } %>
-
         <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
           <li class="list-group-item"><%= user.email %> (only visible to you)</li>
         <% } %>
