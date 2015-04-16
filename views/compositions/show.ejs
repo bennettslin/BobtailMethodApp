@@ -1,25 +1,19 @@
 <% include ../partials/header %>
 
-
-<div class="container">
-  <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
-
-      <% if (composition.picUrl) { %>
-        <img src="<%= composition.picUrl %>">
-      <% } %>
-      <h1><%= composition.composerName %>'s composition</h1>
-    </div>
-
-    <div class="col-sm-8 col-sm-offset-2">
-      <% include ../partials/grid %>
-    </div>
+  <div class="col-sm-8 col-sm-offset-2">
+    <% if (composition.picUrl) { %>
+      <img src="<%= composition.picUrl %>">
+    <% } %>
+    <h1><%= composition.composerName %>'s composition</h1>
+    <% include ../partials/grid %>
+  </div>
+  <div class="col-sm-2">
     <% include ../partials/sidebar %>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-sm-8 col-sm-offset-2">
+  <div class="col-sm-6 col-sm-offset-3">
     <h1>Critiques</h1>
     <table class="table table-hover">
       <thead>
@@ -31,33 +25,34 @@
         </tr>
       </thead>
       <tbody>
-      <% composition.critiques.forEach(function(critique) { %>
+        <% composition.critiques.forEach(function(critique) { %>
         <tr>
           <% if (critique.picUrl) { %>
-            <td><img class="thumbnail-avatar" src="<%= critique.picUrl %>"></td>
+          <td><img class="thumbnail-avatar" src="<%= critique.picUrl %>"></td>
           <% } else { %>
-            <td></td>
+          <td></td>
           <% } %>
           <td><a href="/users/<%= critique.userId %>"><%= critique.criticName %></a></td>
           <td><%= critique.comment %></td>
           <td><%= critique.createdAt %></td>
         </tr>
-      <% }) %>
+        <% }) %>
       </tbody>
     </table>
     <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
-      <form class="form" action="/critiques" method="POST">
-        <legend>New critique</legend>
-        <div class="form-group col-sm-4">
-          <input type="text" class="form-control" name="comment" placeholder="Add a comment">
-          <input type="hidden" name="id" value="<%= composition.id %>">
-        </div>
-        <div class="form-group col-sm-4">
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
+    <form class="form" action="/critiques" method="POST">
+      <legend>New critique</legend>
+      <div class="form-group col-sm-4">
+        <input type="text" class="form-control" name="comment" placeholder="Add a comment">
+        <input type="hidden" name="id" value="<%= composition.id %>">
+      </div>
+      <div class="form-group col-sm-4">
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
     <% } %>
   </div>
+</div>
 </div>
 
 <% include ../partials/footer %>

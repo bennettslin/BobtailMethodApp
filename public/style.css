@@ -1,19 +1,44 @@
 .chord-select {
-  width: 231px;
+  width: 219px;
   float: left;
+}
+
+.meter-symbol-space {
+  width: 40px;
+  display:inline-block;
+  float: left;
+}
+
+.meter-symbol {
+  width: 30px;
+  display:inline-block;
+  text-align: center;
+}
+
+.chord-symbol {
+  width: 40px;
+  display:inline-block;
+}
+
+.chord-symbol.left {
+  text-align: right;
+}
+
+.chord-symbol.right {
+  text-align: left;
 }
 
 .cell {
   height: 16px;
-  width: 32px;
+  width: 30px;
   font-size: 8px;
 }
 
-.cell-C {
+.margin-bottom {
   margin-bottom: 10px;
 }
 
-.cell-bar-start {
+.margin-right {
   margin-right: 16px;
 }
 

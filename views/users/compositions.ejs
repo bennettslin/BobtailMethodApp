@@ -1,33 +1,29 @@
 <% include ../partials/header %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
-      <% if (user.picUrl) { %>
-        <img src="<%= user.picUrl %>">
-      <% } %>
-      <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
-        <h1>All of <%= user.name %>'s compositions (you)</h1>
-      <% } else { %>
-        <h1>All of <%= user.name %>'s compositions</h1>
-      <% } %>
-      <table class="table table-hover">
-        <thead>
-            <th>Melody String</th>
-            <th>Playback</th>
-          </tr>
-        </thead>
-        <tbody>
-        <% user.compositions.forEach(function(composition) { %>
-          <tr>
-            <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
-            <td><a href="" data-id="<%= composition.melody %>" class="music-button btn btn-warning btn-xs"><i class="glyphicon glyphicon-music"></i></a></td>
-          </tr>
-        <% }) %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="col-sm-6 col-sm-offset-3">
+  <% if (user.picUrl) { %>
+    <img src="<%= user.picUrl %>">
+  <% } %>
+  <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
+    <h1>All of <%= user.name %>'s compositions (you)</h1>
+  <% } else { %>
+    <h1>All of <%= user.name %>'s compositions</h1>
+  <% } %>
+  <table class="table table-hover">
+    <thead>
+        <th>Melody String</th>
+        <th>Playback</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% user.compositions.forEach(function(composition) { %>
+      <tr>
+        <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
+        <td><a href="" data-id="<%= composition.melody %>" class="music-button btn btn-warning btn-xs"><i class="glyphicon glyphicon-music"></i></a></td>
+      </tr>
+    <% }) %>
+    </tbody>
+  </table>
 </div>
 
 <% include ../partials/footer %>

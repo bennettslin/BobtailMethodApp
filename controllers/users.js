@@ -51,7 +51,6 @@ router.get("/friends/:id", function(req, res) {
           if (!error && response.statusCode == 200) {
             console.log("no error, friends array");
             var friendsArray = JSON.parse(body).data;
-            console.log("friendsArray is ", friendsArray);
             async.each(friendsArray, getFacebookFriendUserId, function(error) {
               user.friends = friendsArray;
               res.render("users/friends", {user: user});
@@ -87,6 +86,9 @@ router.get("/compositions/:id", function(req, res) {
         res.render("users/compositions", {user: user});
       })
     })
+  }).catch(function(error) {
+    req.flash("danger", "This user doesn't exist.");
+    res.render("main/error");
   });
 });
 
@@ -119,7 +121,8 @@ router.get("/:id", function(req, res) {
       })
     });
   }).catch(function(error) {
-    res.render("users/error");
+    req.flash("danger", "This user doesn't exist.");
+    res.render("main/error");
   });
 });
 

@@ -1,29 +1,25 @@
 <% include ../partials/header %>
 
-<div class="container">
-  <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
-      <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
-        <h1>About <%= user.name %> (you)</h1>
-      <% } else { %>
-        <h1>About <%= user.name %></h1>
+  <div class="col-sm-6 col-sm-offset-3">
+    <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
+      <h1>About <%= user.name %> (you)</h1>
+    <% } else { %>
+      <h1>About <%= user.name %></h1>
+    <% } %>
+
+    <ul class="list-group">
+      <li class="list-group-item"><%= user.name %></li>
+      <li class="list-group-item"><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></li>
+
+      <% if (user.picUrl) { %>
+        <li class="list-group-item"><img src="<%= user.picUrl %>"></li>
       <% } %>
 
-      <ul class="list-group">
-        <li class="list-group-item"><%= user.name %></li>
-        <li class="list-group-item"><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></li>
+      <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
+        <li class="list-group-item"><%= user.email %> (only visible to you)</li>
+      <% } %>
 
-        <% if (user.picUrl) { %>
-          <li class="list-group-item"><img src="<%= user.picUrl %>"></li>
-        <% } %>
-
-        <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
-          <li class="list-group-item"><%= user.email %> (only visible to you)</li>
-        <% } %>
-
-      </ul>
-    </div>
+    </ul>
   </div>
-</div>
 
 <% include ../partials/footer %>

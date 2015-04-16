@@ -1,12 +1,12 @@
 <% include ../partials/header.ejs %>
 
-<div class="col-sm-8 col-sm-offset-2">
+<div class="col-sm-6 col-sm-offset-3">
   <h1>Sign up!</h1>
   <form class="form" method="post" action="/auth/signup">
     <input type="text" class="form-control" placeholder="Enter your email" name="email">
     <input type="text" class="form-control" placeholder="Enter your name" name="name">
     <input type="password" class="form-control" placeholder="Choose a password" name="password">
-    <input type="submit" value="Sign up" class="btn btn-success">
+    <input type="submit" value="Sign up" class="btn btn-success"> or
     <a href="/auth/login/facebook" class="btn btn-primary">Sign up with <i class="fa fa-facebook"></i></a>
   </form>
 </div>

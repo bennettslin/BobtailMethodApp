@@ -1,6 +1,7 @@
 <% var pitches = ["G", "G\u266F/A\u266D", "A", "A\u266F/B\u266D", "B", "C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D"]; %>
 <% var chords = ["major", "minor", "augmented", "diminished"]; %>
 
+<div class="meter-symbol-space">&nbsp;</div>
 <% for (var i = 0; i < 3; i++) { %>
   <div class="chord-select %>">
 
@@ -19,14 +20,27 @@
 <% } %>
 <hr>
 
-<% for (var j = 24; j >= 0; j--) { %>
-  <div class="">
-    <% for (var i = 1; i <= 18; i++) { %>
-    <% var xBin = i % 2 == 0 ? "even" : "odd"; %>
-    <% var jMod = j % 12 %>
-    <% var yBin = (jMod == 1 || jMod == 3 || jMod == 6 || jMod == 8 || jMod == 11) ? "black" : "white"; %>
-    <a data-x="<%= i %>" data-y="<%= j %>" class="btn cell cell-x-<%= i %> cell-<%= xBin %>-<%= yBin %> <%= jMod == 5 ? "cell-C" : "" %> <%= i % 6 == 0 ? "cell-bar-start" : "" %> <%=(typeof activePitches != "undefined" && activePitches[i - 1] == j ? "active" : "") %> <%=(typeof activePitches != "undefined" ? "locked" : "") %>"></a>
+<% for (var j = 25; j >= 0; j--) { %>
+  <div class="row">
+    <% if (j == 25) { %>
+      <div class="chord-symbol"></div>
+    <% } else { %>
+      <div class="chord-symbol left"><%= pitches[j % 12] %></div>
     <% } %>
-    <%= pitches[j % 12] %>
+      <% for (var i = 1; i <= 18; i++) { %>
+        <% if (j == 25) { %>
+          <div class="meter-symbol <%= i != 18 && i % 6 == 0 ? "margin-right" : "" %>"><%= ((i - 1) % 6) + 1 %></div>
+        <% } else { %>
+        <% var xBin = i % 2 == 0 ? "even" : "odd"; %>
+        <% var jMod = j % 12 %>
+        <% var yBin = (jMod == 1 || jMod == 3 || jMod == 6 || jMod == 8 || jMod == 11) ? "black" : "white"; %>
+        <a data-x="<%= i %>" data-y="<%= j %>" class="btn cell cell-x-<%= i %> cell-<%= xBin %>-<%= yBin %> <%= jMod == 5 ? "margin-bottom" : "" %> <%= i != 18 && i % 6 == 0 ? "margin-right" : "" %> <%=(typeof activePitches != "undefined" && activePitches[i - 1] == j ? "active" : "") %> <%=(typeof activePitches != "undefined" ? "locked" : "") %>"></a>
+      <% } %>
+    <% } %>
+    <% if (j == 25) { %>
+      <div class="chord-symbol"></div>
+    <% } else { %>
+      <div class="chord-symbol right"><%= pitches[j % 12] %></div>
+    <% } %>
   </div>
 <% } %>

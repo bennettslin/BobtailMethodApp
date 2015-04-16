@@ -47,7 +47,7 @@
           <li><a href="/users/<%= loggedInUser.id %>" class="btn btn-info"><i class="glyphicon glyphicon-user"></i> <%= typeof loggedInUser.name === 'string' ? loggedInUser.name : 'Unknown' %></a></li>
           <li><a href="/auth/logout" class="btn">Log out</a></li>
         <% } else { %>
-          <li><a href="/auth/login" class="btn"><i class="glyphicon glyphicon-user"> </i>Log in</a></li>
+          <li><a href="/auth/login" class="btn"><i class="glyphicon glyphicon-user"></i> Log in</a></li>
           <li><a href="/auth/signup" class="btn btn-success">Sign up</a></li>
         <% } %>
       </ul>
@@ -56,8 +56,6 @@
 
   <div class="container">
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-6 col-sm-offset-3">
         <% include ./alerts %>
       </div>
-    </div>
-  </div>

@@ -132,10 +132,12 @@ router.get("/:id", function(req, res) {
       });
 
     }).catch(function(error) {
-      res.render("compositions/error");
+      req.flash("danger", "This composition doesn't exist.");
+      res.render("main/error");
     });
   }).catch(function(error) {
-    res.render("compositions/error");
+    req.flash("danger", "This composition doesn't exist.");
+    res.render("main/error");
   });
 });
 
