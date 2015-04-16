@@ -1,6 +1,6 @@
 $(function() {
 
-  var getMailString = function() {
+  var getMelodyString = function() {
     var myString = "";
 
     for (var i = 0; i < 3; i++) {
@@ -22,17 +22,31 @@ $(function() {
     return myString;
   };
 
-      // record button
+    // publish button
   $('#composition-form').on('submit', function(event) {
-    var mailString = getMailString();
+    var melodyString = getMelodyString();
+    $('.composition-string').val(melodyString);
+  })
+
+    // mail button
+  $('#envelope-form').on('submit', function(event) {
+    var mailString = getMelodyString();
     $('.composition-string').val(mailString);
   })
 
-      // mail button
-  $('#envelope-form').on('submit', function(event) {
-    var mailString = getMailString();
-    $('.composition-string').val(mailString);
-  })
+    // play button
+  $('#playback-button').on('click', function(event) {
+    if ($(this).hasClass('play')) {
+      $(this).removeClass('play');
+      $(this).html("<i class='glyphicon glyphicon-stop'></i>");
+    } else {
+      $(this).addClass('play');
+      $(this).html("<i class='glyphicon glyphicon-play'></i>");
+    }
+
+    var melodyString = getMelodyString();
+    playString(melodyString, 6, null);
+  });
 
     // notes from grid cells
   $('.cell').on("click", function(event) {
@@ -44,14 +58,21 @@ $(function() {
         $('.cell-x-' + $(this).attr('data-x')).removeClass('active');
         $(this).addClass('active');
         var oscillator = myAudioContext.createOscillator();
-        playString(String.fromCharCode(pitch + 64), oscillator, true);
+        playCharCode(pitch + 79, oscillator, true);
       }
     }
+  });
+
+    // notes from pressed keys
+  $(this).on("keydown", function(event) {
+    var oscillator = myAudioContext.createOscillator();
+    playCharCode(event.which + 32, oscillator, true);
   });
 
   // audio context
   var myAudioContext = new AudioContext();
   var gainNode = myAudioContext.createGain();
+  gainNode.gain.value = 0.5;
   gainNode.connect(myAudioContext.destination);
 
   // Fourier transform
@@ -59,59 +80,72 @@ $(function() {
   var sirenImag = new Float32Array(sirenReal.length);
   var sirenWave = myAudioContext.createPeriodicWave(sirenReal, sirenImag);
 
-  // notes from pressed keys
-  $(this).on("keydown", function(event) {
-
-    var oscillator = myAudioContext.createOscillator();
-    playString(String.fromCharCode(event.which + 32), oscillator, true);
-  });
-
-  // music from clicked music buttons
-  $('.music-button').on('click', function(event) {
-    event.preventDefault();
-    var myName = $(this).data('id');
-    var oscillator = myAudioContext.createOscillator();
-    playString(myName, oscillator, true);
-  });
-
-  var playString = function(name, oscillator, first) {
-
-    if (name.length == 0) {
-      oscillator.stop(0);
-      return;
-    }
+  var playCharCode = function(charCode, oscillator, first) {
 
     oscillator.type = 'custom';
     oscillator.setPeriodicWave(sirenWave);
 
-    var charCode = name.charCodeAt(0) + 32;
     var freq = Math.pow(1.059463094, charCode);
-    oscillator.frequency.value = freq;
 
-    if (first) {
-      oscillator.connect(gainNode);
-      oscillator.start(0);
-    }
+    oscillator.frequency.value = freq;
+    oscillator.connect(gainNode);
+    oscillator.start(0);
 
     setInterval(function() {
-      name = name.slice(1);
-      playString(name, oscillator, false);
-    }, 75.0);
-  };
+      oscillator.stop(0);
+    }, 100.0);
+  }
 
-    // mail button
-  // $('#envelope-form').on('submit', function(event) {
-  //   event.preventDefault();
+  var playString = function(string, index, oscillator) {
+    // $('.navbar-brand').append(string[i]);
+    console.log(string);
+    for (var i = 0; i < string.length; i++) {
+      if (string[i] != "-") {
 
-  //   var myData = $('#composition-form').serialize();
-  //   $('.navbar-brand').text(myData);
+        // setTimeout(function() {
+          console.log("playing note", string[i])
+          var newOscillator = myAudioContext.createOscillator();
+          newOscillator.type = 'custom';
+          newOscillator.setPeriodicWave(sirenWave);
+          var charCode = string.charCodeAt(i) + 67;
+          var freq = Math.pow(1.059463094, charCode);
+          newOscillator.frequency.value = freq;
+          newOscillator.connect(gainNode);
+          newOscillator.start(i * .3);
+          newOscillator.stop((i* .3) + 0.1);
+        // },i*5000)
+      }
+    };
+    return;
 
-  //   $.ajax({
-  //     method:'POST',
-  //     url:"compositions/mail",
-  //     data:myData
-  //   }).done(function(data) {
+    setTimeout(function() {
+      if (oscillator) {
+        oscillator.stop(0);
+      }
 
-  //   });
-  // })
+      if (index >= string.length) {
+        return;
+      }
+      $('.navbar-brand').text(index);
+      // gainNode.gain.value = 0.5;
+      // gainNode.connect(myAudioContext.destination);
+
+      var newOscillator = myAudioContext.createOscillator();
+
+      newOscillator.type = 'custom';
+      newOscillator.setPeriodicWave(sirenWave);
+
+      var charCode = string.charCodeAt(index) + 79;
+      var freq = Math.pow(1.059463094, charCode);
+      newOscillator.frequency.value = freq;
+
+      newOscillator.connect(gainNode);
+      newOscillator.start(0.1);
+      setInterval(function() {
+        playString(string, index + 1, newOscillator);
+      }, 100.0);
+
+    }, 200.0);
+  }
+
 })
