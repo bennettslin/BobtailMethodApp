@@ -12,8 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       validate: {
 
-      },
-      allowNull: false
+      }
     },
     userId: {
       type: DataTypes.INTEGER,

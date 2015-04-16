@@ -3,6 +3,16 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
+var renderCompositionsShow = function(composition, req, res) {
+  var compositionObject = req.getCompositionFromCode(composition.melody);
+  if (compositionObject) {
+    compositionObject.composition = composition;
+    res.render("compositions/show", compositionObject);
+  } else {
+    res.render("compositions/show", {composition: composition});
+  }
+}
+
 var addComposerName = function(composition, callback) {
   db.user.find(composition.userId).then(function(user) {
     composition.composerName = user.name;
@@ -64,10 +74,14 @@ router.get("/code", function(req, res) {
   res.render("compositions/code");
 });
 
+// FIXME: make this a global variable
+var NODE_ENV = process.env.NODE_ENV || 'development';
+var BASE_URL = (NODE_ENV === 'production') ? 'https://bobtail-method-app.herokuapp.com' : 'http://localhost:3000';
+
 router.post("/mail", function(req, res) {
-  var melodyString = req.body["melody-string"];
-  var email = req.body["melody-email"] || "";
-  res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=%0D" + Array(56).join("_") + "%0D%0Dhttp://bobtail-method-app.herokuapp.com/" + melodyString + "/" + "%0A" + Array(56).join("_"));
+  var melodyString = req.body["composition-string"];
+  var email = req.body["composition-email"] || "";
+  res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=%0D" + Array(56).join("_") + "%0D%0D" + BASE_URL + "/code/" + melodyString + "/" + "%0A" + Array(56).join("_"));
 });
 
 router.post("/", function(req, res) {
@@ -76,8 +90,7 @@ router.post("/", function(req, res) {
     db.user.find(loggedInUser.id).then(function(user) {
 
       // user found
-      db.composition.create({melody: req.body.melody,
-                            harmony: req.body.harmony,
+      db.composition.create({melody: req.body["composition-string"],
                              userId: user.id}).then(function(composition) {
         req.flash("success", "Composition saved!");
         res.redirect("users/compositions/" + user.id);
@@ -108,11 +121,11 @@ router.get("/:id", function(req, res) {
               if (provider.type == 'facebook') {
                 var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
                 composition.picUrl = picUrl;
-                res.render("compositions/show", {composition: composition});
+                renderCompositionsShow(composition, req, res);
               }
 
             }).catch(function(error) {
-              res.render("compositions/show", {composition: composition});
+              renderCompositionsShow(composition, req, res);
             })
           })
         }

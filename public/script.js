@@ -23,17 +23,15 @@ $(function() {
   };
 
       // record button
-  // $('#record-button').on('click', function(event) {
-  //   event.preventDefault();
-  //   $(this).removeClass('btn-primary');
-  //   $(this).addClass('btn-warning');
-  //   $('.navbar-brand').text(getMailString());
-  // })
+  $('#composition-form').on('submit', function(event) {
+    var mailString = getMailString();
+    $('.composition-string').val(mailString);
+  })
 
       // mail button
   $('#envelope-form').on('submit', function(event) {
     var mailString = getMailString();
-    $('#melody-string').val(mailString);
+    $('.composition-string').val(mailString);
   })
 
     // notes from grid cells
@@ -50,12 +48,6 @@ $(function() {
       }
     }
   });
-
-  // navbar toggle active (doesn't seem to work!)
-  // $(".navbar a").on("click", function() {
-    // $(".navbar li").find(".active").removeClass("active");
-    // $(this).parent().addClass("active");
-  // });
 
   // audio context
   var myAudioContext = new AudioContext();

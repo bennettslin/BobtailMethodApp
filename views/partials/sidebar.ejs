@@ -1,21 +1,19 @@
 <div class="col-sm-2">
-  <form id="composition-form" class="form" action="/compositions" method="POST">
-    <input type="hidden" class="form-control" name="melody">
-    <input type="hidden" class="form-control" name="harmony">
-    <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
-      <button type="submit" class="btn btn-primary">Publish!</button>
+  <form id="composition-form" class="form" action="/compositions" method="post">
+    <input class="composition-string" type="hidden" class="form-control" name="composition-string">
+    <% if (typeof activePitches == 'undefined' && loggedInUser) { %>
+      <button class="btn btn-primary">Publish!</button>
     <% } %>
   </form>
 
   <form id="envelope-form" class="form" action="/compositions/mail" method="post">
-    <input id="melody-string" type="hidden" class="form-control" name="melody-string">
-    <input id="harmony-string" type="hidden" class="form-control" name="harmony-string">
+    <input class="composition-string" type="hidden" class="form-control" name="composition-string">
     <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
-      <input id="melody-email" type="hidden" class="form-control" name="melody-email" value="<%= loggedInUser.email %>">
+      <input id="composition-email" type="hidden" class="form-control" name="composition-email" value="<%= loggedInUser.email %>">
     <% } %>
 
     <% if (typeof activePitches == "undefined") { %>
-      <button type="submit" id="envelope-button" class="btn btn-primary"><i class="glyphicon glyphicon-envelope"></i></button>
+      <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-envelope"></i></button>
 <!--       <button id="record-button" class="btn btn-primary"><i class="glyphicon glyphicon-record"></i></button> -->
     <% } %>
 

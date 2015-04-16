@@ -106,6 +106,59 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function(req, res, next) {
+  req.getCompositionFromCode = function(code) {
+    code = code.toUpperCase();
+    var keys = [];
+    var chords = [];
+    var pitches = [];
+
+    if (code.length < 24) {
+      return false;
+    } else {
+
+      for (var i = 0; i < 6; i++) {
+
+        // it's a key
+        if (i % 2 == 0) {
+          var key = code.charCodeAt(i) - 65;
+          if (!isNaN(key) && key >= 0 && key < 12) {
+            keys.push(key);
+          } else {
+            return false;
+          }
+
+          // it's a chord
+        } else {
+          var chord = code.charCodeAt(i) - 65;
+          if (!isNaN(chord) && chord >= 0 && chord < 4) {
+            chords.push(chord);
+          } else {
+            return false;
+          }
+        }
+      }
+
+      for (var i = 6; i < 24; i++) {
+
+        if (code[i] == '-') {
+          pitches.push(code[i]);
+        } else {
+          var pitch = code.charCodeAt(i) - 65;
+          if (!isNaN(pitch) && pitch >= 0 && pitch <= 24) {
+            pitches.push(pitch);
+          } else {
+            return false;
+          }
+        }
+      }
+
+      return {activePitches: pitches, keys: keys, activeChords: chords};
+    }
+  };
+  next();
+})
+
 // check for logged in user
 app.use(function(req, res, next) {
   req.getUser = function() {
