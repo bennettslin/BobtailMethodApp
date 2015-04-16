@@ -14,7 +14,7 @@
       <% compositions.forEach(function(composition) { %>
         <tr>
           <% if (composition.picUrl) { %>
-            <td><img class="thumbnail-avatar" src="<%= composition.picUrl %>"></td>
+            <td>    <div class="avatar"><img src="<%= composition.picUrl %>" class="avatar-image"></div></td>
           <% } else { %>
             <td></td>
           <% } %>

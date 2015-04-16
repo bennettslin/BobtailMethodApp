@@ -14,7 +14,7 @@
     <% users.forEach(function(user) { %>
         <tr>
           <% if (user.picUrl) { %>
-            <td><img class="thumbnail-avatar" src="<%= user.picUrl %>"></td>
+            <td><div class="avatar"><img src="<%= user.picUrl %>" class="avatar-image"></div></td>
           <% } else { %>
             <td></td>
           <% } %>

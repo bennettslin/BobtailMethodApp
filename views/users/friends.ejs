@@ -1,6 +1,7 @@
 <% include ../partials/header %>
 
 <div class="col-sm-6 col-sm-offset-3">
+
   <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
   <h1><%= user.name %>'s Friends (you)</h1>
   <% } else { %>
@@ -18,7 +19,7 @@
     <% user.friends.forEach(function(friend) { %>
         <tr>
           <% if (friend.picUrl) { %>
-            <td><img class="thumbnail-avatar" src="<%= friend.picUrl %>"></td>
+            <td><div class="avatar"><img src="<%= friend.picUrl %>" class="avatar-image"></div></td>
           <% } else { %>
             <td></td>
           <% } %>

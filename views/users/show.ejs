@@ -1,6 +1,10 @@
 <% include ../partials/header %>
 
   <div class="col-sm-6 col-sm-offset-3">
+    <% if (user.picUrl) { %>
+      <li class="list-group-item"><div><img src="<%= user.picUrl %>" class="avatar-image"></div></li>
+    <% } %>
+
     <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
       <h1>About <%= user.name %> (you)</h1>
     <% } else { %>
@@ -10,10 +14,6 @@
     <ul class="list-group">
       <li class="list-group-item"><%= user.name %></li>
       <li class="list-group-item"><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></li>
-
-      <% if (user.picUrl) { %>
-        <li class="list-group-item"><img src="<%= user.picUrl %>"></li>
-      <% } %>
 
       <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
         <li class="list-group-item"><%= user.email %> (only visible to you)</li>

@@ -2,7 +2,7 @@
 
 <div class="col-sm-6 col-sm-offset-3">
   <% if (user.picUrl) { %>
-    <img src="<%= user.picUrl %>">
+    <div class="avatar margin-right"><img src="<%= user.picUrl %>" class="avatar-image"></div>
   <% } %>
   <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
     <h1>All of <%= user.name %>'s compositions (you)</h1>

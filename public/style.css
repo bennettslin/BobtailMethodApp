@@ -67,6 +67,15 @@
   color: white;
 }
 
+.avatar {
+  display: inline-block;
+  float: left;
+}
+
+.avatar-image {
+  border-radius: 16px;
+}
+
 .test {
   background-color: red;
 }
