@@ -7,11 +7,12 @@ Any user can write new compositions and view those of others. Only registered us
 
 Because the melody is brief, there are only play and stop buttons. The user composes the melody using a grid interface.
 
-# Technologies used
+## Technologies used
++ The usual that was covered in class.
 + Facebook OAuth using Passport.js, with additional user friends permission.
 + Web Audio API.
 
-# Things left to fix
+## Things left to fix
 ### Known knowns
 + Users should be able to update profiles, including uploading cover pictures.
 + Users should be able to add titles and descriptions to compositions, and update them. They should also be able to delete their own critiques, as well as those left by others.
@@ -20,9 +21,10 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 
 ### Known unknowns
 + Deleting a composition should cascade down and delete its critiques as well.
++ Database queries should probably use sequelize to join tables, rather than rely on async to nest individual queries.
 + Major styling!
 
 ### Unknown unknowns
-+ Sound is God-awful...
-+ Stop button should change back to play when composition ends.
-+ Show notated music on staff line rather than string literal
++ Sound is God-awful... Figure out how to implement sound fonts, or else tinker with waveforms and envelopes.
++ Stop button should change back to play when playback completes.
++ Show notated music on staff line rather than string literal.

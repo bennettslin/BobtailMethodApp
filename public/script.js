@@ -17,6 +17,8 @@ $(function() {
     });
   });
 
+  // creates a string literal from chords and notes chosen through grid interface
+  // illegal compositional elements are converted to +s or -s
   var getMelodyString = function() {
     var myString = "";
 
@@ -49,47 +51,58 @@ $(function() {
     return myString;
   };
 
-    // publish button
+    // publish composition button
   $('#composition-form').on('submit', function(event) {
     var melodyString = getMelodyString();
     $('.composition-string').val(melodyString);
   })
 
-    // mail button
+    // mail composition button
   $('#envelope-form').on('submit', function(event) {
     var mailString = getMelodyString();
     $('.composition-string').val(mailString);
   })
 
-    // audio context
+    // declare audio context
   var myAudioContext;
   var gainNode;
   var chordGainNode;
-    // Fourier transform
+
+    // Fourier transform of annoying siren
   var sirenReal = new Float32Array([0,0.4,0.4,1,1,1,0.3,0.7,0.6,0.5,0.9,0.8]);
   var sirenImag = new Float32Array(sirenReal.length);
   var sirenWave;
 
-    // play button
+    // playback button
   $('.playback-button').on('click', function(event) {
+
+      // user clicked play button
     if ($(this).hasClass('play')) {
       $('.playback-button').each(function() {
         $(this).addClass('disabled');
       });
       $(this).removeClass('disabled');
+
+        // new audio context is created for musical sequence each time
       myAudioContext = new AudioContext();
+
+        // bass and melody gain
       gainNode = myAudioContext.createGain();
       gainNode.connect(myAudioContext.destination);
-      gainNode.gain.value = 0.2;
+      gainNode.gain.value = 0.8;
+
+        // chord gain
       chordGainNode = myAudioContext.createGain();
       chordGainNode.connect(myAudioContext.destination);
       chordGainNode.gain.value = 0.2;
       sirenWave = myAudioContext.createPeriodicWave(sirenReal, sirenImag);
+
       $(this).removeClass('play');
       $(this).html("<i class='glyphicon glyphicon-stop'></i>");
       var melodyString = $(this).attr('data-id') || getMelodyString();
       playString(melodyString);
 
+      //user clicked stop button
     } else {
       $('.playback-button').each(function() {
         $(this).removeClass('disabled');
@@ -101,6 +114,7 @@ $(function() {
     }
   });
 
+    // create audio context for grid interface
   var cellAudioContext = new AudioContext();
   var cellGainNode = cellAudioContext.createGain();
   cellGainNode.gain.value = 0.5;
@@ -122,12 +136,13 @@ $(function() {
     playCharCode(pitch + 79, oscillator, true);
   });
 
-    // notes from pressed keys
+    // play notes from typing in keys; uncomment for fun
   // $(this).on("keydown", function(event) {
   //   var oscillator = cellAudioContext.createOscillator();
   //   playCharCode(event.which + 32, oscillator, true);
   // });
 
+    // play notes from pressed keys or grid interface
   var playCharCode = function(charCode, oscillator, first) {
 
     oscillator.type = 'custom';
@@ -144,6 +159,7 @@ $(function() {
     }, 100.0);
   }
 
+    // create oscillator for each note in musical sequence
   var setNewOscillator = function(charCode, type, octave, startUnit, duration, thisGainNode) {
     console.log("oscillator:", charCode, type, octave, startUnit, duration);
   var newOscillator = myAudioContext.createOscillator();
@@ -166,18 +182,20 @@ $(function() {
   newOscillator.stop(stopTime);
 }
 
+    // play musical sequence
   var playString = function(string) {
     string = string.toUpperCase();
 
     for (var i = 0; i < 3; i++) {
       var rootCharCode = string.charCodeAt(i * 2) + 17;
       if (rootCharCode >= 82 && rootCharCode <= 93) {
-        console.log("rootCharCode is", rootCharCode);
+
+          // play bass
         setNewOscillator(rootCharCode, "sine", -1, i, 1.8, gainNode);
 
         var chord = string.charCodeAt(i * 2 + 1) - 65;
 
-        // root
+        // play chord root, keep within octave range
         if (chord >= 0 && chord < 4) {
           var myUnison = rootCharCode;
           if (myUnison > 111) {
@@ -187,7 +205,7 @@ $(function() {
           }
           setNewOscillator(myUnison, "sine", 0, i, 1.8, chordGainNode);
 
-          // third
+          // play chord third
           var myThird = rootCharCode + (chord % 2 == 0 ? 4 : 3);
           if (myThird > 111) {
             myThird -= 12;
@@ -196,7 +214,7 @@ $(function() {
           }
           setNewOscillator(myThird, "sine", 0, i, 1.8, chordGainNode);
 
-          // fifth
+          // play chord fifth
           var myFifth;
           if (chord < 2) {
             myFifth = rootCharCode + 7;
@@ -215,7 +233,7 @@ $(function() {
       }
     }
 
-    // melody
+    // play the melody
     for (var j = 6; j < 24; j++) {
       if (string[j] != "-") {
         setNewOscillator(string.charCodeAt(j), "custom", 1, j - 6, 0.3, gainNode);

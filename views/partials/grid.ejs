@@ -5,12 +5,14 @@
 <% for (var i = 0; i < 3; i++) { %>
   <div class="chord-select %>">
 
+      <!-- dropdown to select chord root -->
     <select class="select-key-<%= i %>" <%=(typeof keys != "undefined" ? "disabled" : "") %> data-key="<%= i %>">
       <% for (var j = -1; j < 12; j++) { %>
       <option <%=(typeof keys != "undefined" && keys[i] == j ? "selected" : "") %> value="<%= j %>"><%= j == -1 ? "(root)" : pitches[(j + 5) % 12] %></option>
       <% } %>
     </select>
 
+      <!-- dropdown to select chord type -->
     <select class="select-chord-<%= i %>" <%=(typeof activeChords != "undefined" ? "disabled" : "") %> data-chord="<%= i %>">
       <% for (var j = -1; j < 4; j++) { %>
         <option <%=(typeof activeChords != "undefined" && activeChords[i] == j ? "selected" : "") %> value="<%= j %>"><%= j == -1 ? "(chord)" : chords[j] %></option>
@@ -20,6 +22,7 @@
 <% } %>
 <hr>
 
+  <!-- grid interface -->
 <% for (var j = 25; j >= 0; j--) { %>
   <div class="row">
     <% if (j == 25) { %>

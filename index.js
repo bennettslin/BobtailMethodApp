@@ -113,12 +113,15 @@ app.use(function(req, res, next) {
     var chords = [];
     var pitches = [];
 
+      // string literal fails if less than 24 characters
     if (code.length < 24) {
       return false;
     } else {
 
+        // first 6 characters are chord roots and types
       for (var i = 0; i < 6; i++) {
-        // it's a key
+
+          // this is a chord root
         if (i % 2 == 0) {
           if (code[i] == '+') {
             keys.push(code[i]);
@@ -131,7 +134,7 @@ app.use(function(req, res, next) {
             }
           }
 
-          // it's a chord
+          // this is a chord type
         } else {
           if (code[i] == '+') {
             chords.push(code[i]);
@@ -146,8 +149,8 @@ app.use(function(req, res, next) {
         }
       }
 
+        // next 18 characters are notes in the melody
       for (var i = 6; i < 24; i++) {
-
         if (code[i] == '-') {
           pitches.push(code[i]);
         } else {
