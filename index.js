@@ -118,23 +118,30 @@ app.use(function(req, res, next) {
     } else {
 
       for (var i = 0; i < 6; i++) {
-
         // it's a key
         if (i % 2 == 0) {
-          var key = code.charCodeAt(i) - 65;
-          if (!isNaN(key) && key >= 0 && key < 12) {
-            keys.push(key);
+          if (code[i] == '+') {
+            keys.push(code[i]);
           } else {
-            return false;
+            var key = code.charCodeAt(i) - 65;
+            if (!isNaN(key) && key >= 0 && key < 12) {
+              keys.push(key);
+            } else {
+              return false;
+            }
           }
 
           // it's a chord
         } else {
-          var chord = code.charCodeAt(i) - 65;
-          if (!isNaN(chord) && chord >= 0 && chord < 4) {
-            chords.push(chord);
+          if (code[i] == '+') {
+            chords.push(code[i]);
           } else {
-            return false;
+            var chord = code.charCodeAt(i) - 65;
+            if (!isNaN(chord) && chord >= 0 && chord < 4) {
+              chords.push(chord);
+            } else {
+              return false;
+            }
           }
         }
       }
@@ -152,7 +159,6 @@ app.use(function(req, res, next) {
           }
         }
       }
-
       return {activePitches: pitches, keys: keys, activeChords: chords};
     }
   };
@@ -204,8 +210,15 @@ app.use('/auth',require('./controllers/auth.js'));
 app.use('/critiques', require('./controllers/critiques.js'));
 app.use('/users', require('./controllers/users.js'));
 
-app.get("/:invalid", function(req, res) {
-  res.redirect("/");
+app.get("/:code", function(req, res) {
+  var stringCode = req.params.code;
+  var compositionObject = req.getCompositionFromCode(stringCode);
+  if (compositionObject == false) {
+    req.flash("danger", "This is not a valid composition!");
+    res.redirect("/");
+  } else {
+    res.render("compositions/code", compositionObject);
+  }
 });
 
 app.listen(process.env.PORT || 3000);

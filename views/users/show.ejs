@@ -12,13 +12,10 @@
     <% } %>
 
     <ul class="list-group">
-      <li class="list-group-item"><%= user.name %></li>
-      <li class="list-group-item"><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></li>
-
       <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
         <li class="list-group-item"><%= user.email %> (only visible to you)</li>
       <% } %>
-
+      <li class="list-group-item"><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></li>
     </ul>
   </div>
 

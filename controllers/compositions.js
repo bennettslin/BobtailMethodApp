@@ -81,7 +81,7 @@ var BASE_URL = (NODE_ENV === 'production') ? 'https://bobtail-method-app.herokua
 router.post("/mail", function(req, res) {
   var melodyString = req.body["composition-string"];
   var email = req.body["composition-email"] || "";
-  res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=%0D" + Array(56).join("_") + "%0D%0D" + BASE_URL + "/code/" + melodyString + "/" + "%0A" + Array(56).join("_"));
+  res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=%0D" + Array(56).join("_") + "%0D%0D" + BASE_URL + "/" + melodyString + "%0A" + Array(56).join("_"));
 });
 
 router.post("/", function(req, res) {

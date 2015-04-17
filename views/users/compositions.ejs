@@ -19,7 +19,7 @@
     <% user.compositions.forEach(function(composition) { %>
       <tr>
         <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
-        <td><a href="" data-id="<%= composition.melody %>" class="music-button btn btn-warning btn-xs"><i class="glyphicon glyphicon-music"></i></a></td>
+        <td><button data-id="<%= composition.melody %>" class="playback-button play btn btn-primary"><i class="glyphicon glyphicon-play"></i></button></td>
       </tr>
     <% }) %>
     </tbody>
