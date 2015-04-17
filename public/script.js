@@ -113,13 +113,13 @@ $(function() {
       if ($(this).hasClass('active')) {
         $(this).removeClass('active');
       } else {
-        var pitch = parseInt($(this).attr('data-y'));
         $('.cell-x-' + $(this).attr('data-x')).removeClass('active');
         $(this).addClass('active');
-        var oscillator = cellAudioContext.createOscillator();
-        playCharCode(pitch + 79, oscillator, true);
       }
     }
+    var pitch = parseInt($(this).attr('data-y'));
+    var oscillator = cellAudioContext.createOscillator();
+    playCharCode(pitch + 79, oscillator, true);
   });
 
     // notes from pressed keys
