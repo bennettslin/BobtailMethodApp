@@ -7,12 +7,17 @@ Any user can write new compositions and view those of others. Only registered us
 
 Because the melody is brief, there are only play and stop buttons. The user composes the melody using a grid interface.
 
+###[Entity-relationship model](https://www.draw.io/#DBobtailMethodEntityRelations.html)
+###[User experience flowchart](https://www.draw.io/#DBobtailMethodFlowchart.html)
+###[Trello board](https://trello.com/b/vcIgGdyh/bobtailmethodapp)
+
 ## Technologies used
 + The usual that was covered in class.
 + Facebook OAuth using Passport.js, with additional user friends permission.
 + Web Audio API.
 
 ## Things left to fix
+
 ### Known knowns
 + Users should be able to update profiles, including uploading cover pictures.
 + Users should be able to add titles and descriptions to compositions, and update them. They should also be able to delete their own critiques, as well as those left by others.
