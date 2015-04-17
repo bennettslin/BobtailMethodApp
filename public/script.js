@@ -1,5 +1,22 @@
 $(function() {
 
+  $('.delete-button').on('click', function(event) {
+    event.preventDefault();
+
+    var deleteButton = $(this);
+    var myUrl = $(this).attr('data-id');
+    console.log("my url is", myUrl);
+
+    $.ajax({
+      method:'DELETE',
+      url:myUrl
+    }).done(function(data) {
+      deleteButton.closest('tr').fadeOut('slow', function() {
+        $(this).remove();
+      });
+    });
+  });
+
   var getMelodyString = function() {
     var myString = "";
 
@@ -106,10 +123,10 @@ $(function() {
   });
 
     // notes from pressed keys
-  $(this).on("keydown", function(event) {
-    var oscillator = cellAudioContext.createOscillator();
-    playCharCode(event.which + 32, oscillator, true);
-  });
+  // $(this).on("keydown", function(event) {
+  //   var oscillator = cellAudioContext.createOscillator();
+  //   playCharCode(event.which + 32, oscillator, true);
+  // });
 
   var playCharCode = function(charCode, oscillator, first) {
 

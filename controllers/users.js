@@ -88,7 +88,7 @@ router.get("/compositions/:id", function(req, res) {
     })
   }).catch(function(error) {
     req.flash("danger", "This user doesn't exist.");
-    res.render("main/error");
+    res.redirect("/");
   });
 });
 
@@ -122,7 +122,7 @@ router.get("/:id", function(req, res) {
     });
   }).catch(function(error) {
     req.flash("danger", "This user doesn't exist.");
-    res.render("main/error");
+    res.redirect("/");
   });
 });
 

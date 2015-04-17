@@ -1,3 +1,109 @@
+.navbar-default {
+  background-color: #0d0d12;
+  border-color: #5d676f;
+}
+.navbar-default .navbar-brand {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
+  color: #ac9fcc;
+}
+.navbar-default .navbar-text {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #ac9fcc;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu {
+  background-color: #0d0d12;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
+.navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
+  color: #ac9fcc;
+  background-color: #5d676f;
+}
+.navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
+  background-color: #0d0d12;
+}
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+  color: #ac9fcc;
+  background-color: #5d676f;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+  color: #ac9fcc;
+  background-color: #5d676f;
+}
+.navbar-default .navbar-toggle {
+  border-color: #5d676f;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+  background-color: #5d676f;
+}
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #ecf0f1;
+}
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #ecf0f1;
+}
+.navbar-default .navbar-link {
+  color: #ecf0f1;
+}
+.navbar-default .navbar-link:hover {
+  color: #ac9fcc;
+}
+
+@media (max-width: 767px) {
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+    color: #ecf0f1;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: #ac9fcc;
+  }
+  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+    color: #ac9fcc;
+    background-color: #5d676f;
+  }
+}
+
+body {
+  background-color: #F0EAD6;
+}
+
+p {
+  font-family: 'Open Sans', sans-serif;
+}
+
+ul {
+  font-family: 'Open Sans', sans-serif;
+}
+
+ol {
+  font-family: 'Open Sans', sans-serif;
+}
+
+table {
+  font-family: 'Open Sans', sans-serif;
+}
+
+a {
+  font-family: 'Playfair Display', serif;
+}
+
+.btn {
+  font-family: 'Playfair Display', serif;
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+}
+
 .chord-select {
   width: 219px;
   float: left;

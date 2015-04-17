@@ -25,7 +25,9 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         models.composition.belongsTo(models.user);
-        models.composition.hasMany(models.critique);
+
+        // FIXME: This cascade delete does not work, needs a hook
+        models.composition.hasMany(models.critique, {onDelete: "cascade", hooks: true});
       }
     }
   });

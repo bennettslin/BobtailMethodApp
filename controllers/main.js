@@ -13,4 +13,8 @@ router.get("/about", function(req, res) {
   res.render("main/about");
 });
 
+router.get("/error", function(req, res) {
+  res.render("main/error");
+});
+
 module.exports = router;

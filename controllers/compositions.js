@@ -133,12 +133,21 @@ router.get("/:id", function(req, res) {
 
     }).catch(function(error) {
       req.flash("danger", "This composition doesn't exist.");
-      res.render("main/error");
+      res.redirect("/");
     });
   }).catch(function(error) {
     req.flash("danger", "This composition doesn't exist.");
-    res.render("main/error");
+    res.redirect("/");
   });
 });
+
+router.delete("/:id", function(req, res) {
+  console.log("delete called");
+  db.composition.destroy({where: {id:req.params.id}}).then(function() {
+    res.send({result:true});
+  }).catch(function(error) {
+    res.redirect()
+  });
+})
 
 module.exports = router;

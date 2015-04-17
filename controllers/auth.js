@@ -23,7 +23,7 @@ router.post("/login", function(req, res) {
     } else {
       var errorMsg = info && info.message ? info.message : "Unknown error.";
       req.flash('danger', errorMsg);
-      res.redirect('/auth/login');
+      res.redirect('/');
     }
   })(req, res);
 });
@@ -46,10 +46,10 @@ router.post("/signup",function(req,res) {
 
     if (created) {
       req.flash('Success', 'New user account created. Please log in!');
-      res.redirect("/compositions");
+      res.redirect("/");
     } else {
       req.flash('danger', 'That email address already exists!');
-      res.redirect("/compositions");
+      res.redirect("/");
     }
   }).catch(function(error) {
 
@@ -68,7 +68,7 @@ router.post("/signup",function(req,res) {
       req.flash('danger', 'Unknown error.');
     }
 
-    res.redirect("/compositions");
+    res.redirect("/");
   })
 })
 
@@ -110,7 +110,7 @@ router.get("/callback/:provider", function(req, res) {
     } else {
       var errorMsg = info && info.message ? info.message : "Unknown error.";
       req.flash('danger', errorMsg);
-      res.redirect('/auth/login');
+      res.redirect('/');
     }
   })(req, res);
 });
