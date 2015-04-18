@@ -45,7 +45,7 @@ router.post("/signup",function(req,res) {
   db.user.findOrCreate({where: userQuery, defaults: userData}).spread(function(user, created) {
 
     if (created) {
-      req.flash('Success', 'New user account created. Please log in!');
+      req.flash('success', 'New user account created. Please log in!');
       res.redirect("/");
     } else {
       req.flash('danger', 'That email address already exists!');
