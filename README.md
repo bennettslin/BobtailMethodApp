@@ -7,8 +7,8 @@ Any user can write new compositions and view those of others. Only registered us
 
 Because the melody is brief, there are only play and stop buttons. The user composes the melody using a grid interface.
 
-###[Entity-relationship model](https://www.draw.io/#DBobtailMethodEntityRelations.html)
-###[User experience flowchart](https://www.draw.io/#DBobtailMethodFlowchart.html)
+###[Entity-relationship model](https://github.com/bennettslin/BobtailMethodApp/blob/master/public/BobtailMethodEntityRelations.png)
+###[User experience flowchart](https://github.com/bennettslin/BobtailMethodApp/blob/master/public/BobtailMethodFlowchart.png)
 ###[Trello board](https://trello.com/b/vcIgGdyh/bobtailmethodapp)
 
 ## Technologies used
