@@ -14,6 +14,26 @@ module.exports = function(sequelize, DataTypes) {
       },
       allowNull: false
     },
+    firstname: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [1,32],
+          msg: "First name must be between 1 and 32 characters."
+        }
+      },
+      allowNull: true
+    },
+    lastname: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [1,32],
+          msg: "Last name must be between 1 and 32 characters."
+        }
+      },
+      allowNull: true
+    },
     email: {
       type: DataTypes.STRING,
       validate: {

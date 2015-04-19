@@ -7,6 +7,27 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 
+db.user.findAll().then(function(users) {
+  users.forEach(function(user) {
+    var names = user.name.split(" ");
+    user.firstname = names[0];
+    user.lastname = names[1];
+    user.save();
+    console.log("user saved", user.name, user.firstname, user.lastname);
+  })
+})
+
+// db.user.find(1).then(function(user) {
+//   user.firstname = "Bennett";
+//   user.lastname = "Lin";
+//   console.log("user saved", user.name, user.firstname, user.lastname);
+//   user.save().then(function() {
+//     console.log("user was saved!", user);
+//   }).catch(function(error) {
+//     console.log("user was not saved error", error);
+//   });
+// })
+
 var NODE_ENV = process.env.NODE_ENV || 'development';
 var BASE_URL = (NODE_ENV === 'production') ? 'https://bobtail-method-app.herokuapp.com' : 'http://localhost:3000';
 
