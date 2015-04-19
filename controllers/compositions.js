@@ -18,16 +18,18 @@ var renderCompositionsShow = function(composition, req, res) {
 var addComposerName = function(composition, callback) {
   db.user.find(composition.userId).then(function(user) {
     composition.composerName = user.firstname + " " + user.lastname;
+
+      // user is on Facebook
     db.provider.find({where: {userId: user.id}}).then(function(provider) {
       if (provider.type == 'facebook') {
         var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
         composition.picUrl = picUrl;
-        callback();
-      } else {
-        callback();
       }
+      callback();
+
+      // user is not on Facebook
     }).catch(function(error) {
-      callback(error);
+      callback();
     })
 
   }).catch(function(error) {
