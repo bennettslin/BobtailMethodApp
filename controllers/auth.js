@@ -2,16 +2,16 @@ var db = require('../models');
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-
 var bcrypt = require('bcrypt');
 
-//display login form
+  // get login form
 router.get("/login", function(req,res) {
   res.render("auth/login");
 });
 
+  // user posts login info
 router.post("/login", function(req, res) {
-  passport.authenticate('local', {badRequestMessage: "You must enter email and password."}, function(error, user, info) {
+  passport.authenticate('local', {badRequestMessage: "You must enter an email and password."}, function(error, user, info) {
 
     if (user) {
       req.login(user, function(error) {
@@ -28,12 +28,12 @@ router.post("/login", function(req, res) {
   })(req, res);
 });
 
-//display sign up form
+  // get signup form
 router.get("/signup",function(req,res) {
   res.render("auth/signup");
 });
 
-// //create new user in database
+  // user posts signup info, gets created in database
 router.post("/signup",function(req,res) {
 
   var userQuery = {email: req.body.email};
@@ -41,7 +41,7 @@ router.post("/signup",function(req,res) {
                   name: req.body.name,
                   password: req.body.password};
 
-  // where finds, defaults creates
+  // "where" key is to find, "defaults" is to create
   db.user.findOrCreate({where: userQuery, defaults: userData}).spread(function(user, created) {
 
     if (created) {
@@ -72,6 +72,7 @@ router.post("/signup",function(req,res) {
   })
 })
 
+  // logout and redirect to main
 router.get("/logout", function(req, res) {
   req.logout();
   req.flash('info', "You have been logged out.");
@@ -80,7 +81,7 @@ router.get("/logout", function(req, res) {
 
 var ALLOWED_PROVIDERS = ['facebook'];
 
-// oAuth login route
+  // oAuth login route
 router.get("/login/:provider", function(req, res) {
   if (ALLOWED_PROVIDERS.indexOf(req.params.provider) == -1) {
     return res.send('invalid provider url.');
@@ -92,7 +93,7 @@ router.get("/login/:provider", function(req, res) {
     )(req, res);
 });
 
-// oAuth callback route
+  // oAuth callback route
 router.get("/callback/:provider", function(req, res) {
   if (ALLOWED_PROVIDERS.indexOf(req.params.provider) == -1) {
     return res.send('invalid provider url.');

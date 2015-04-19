@@ -1,4 +1,6 @@
 "use strict";
+var db = require('../models');
+
 module.exports = function(sequelize, DataTypes) {
   var composition = sequelize.define("composition", {
     melody: {
@@ -8,12 +10,6 @@ module.exports = function(sequelize, DataTypes) {
       },
       allowNull: false
     },
-    harmony: {
-      type: DataTypes.STRING,
-      validate: {
-
-      }
-    },
     userId: {
       type: DataTypes.INTEGER,
       validate: {
@@ -22,12 +18,22 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   }, {
+    hooks: {
+        // FIXME: This hook does not work
+      beforeDestroy: function(composition, options, sendback) {
+        db.critique.destroy({where: {compositionId: composition.id}}).then(function(critiques) {
+          sendback(null, composition);
+        }).catch(function(error) {
+          sendback(null, composition);
+        });
+      }
+    },
     classMethods: {
       associate: function(models) {
         models.composition.belongsTo(models.user);
 
-        // FIXME: This cascade delete does not work, needs a hook
-        models.composition.hasMany(models.critique, {onDelete: "cascade", hooks: true});
+        // FIXME: This cascade delete does not work
+        models.composition.hasMany(models.critique, {onDelete: "cascade"});
       }
     }
   });

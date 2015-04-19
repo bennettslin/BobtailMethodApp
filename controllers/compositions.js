@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
+  // if composition is from code, add it
 var renderCompositionsShow = function(composition, req, res) {
   var compositionObject = req.getCompositionFromCode(composition.melody);
   if (compositionObject) {
@@ -13,6 +14,7 @@ var renderCompositionsShow = function(composition, req, res) {
   }
 }
 
+  // add composer name and pic url, if found
 var addComposerName = function(composition, callback) {
   db.user.find(composition.userId).then(function(user) {
     composition.composerName = user.name;
@@ -31,6 +33,7 @@ var addComposerName = function(composition, callback) {
   });
 }
 
+  // add critic name, if found
 var addCriticName = function(critique, callback) {
   db.user.find(critique.userId).then(function(user) {
     critique.criticName = user.name;
@@ -49,6 +52,7 @@ var addCriticName = function(critique, callback) {
   });
 }
 
+  // get index of compositions
 router.get("/", function(req, res) {
   var loggedInUser = req.user;
   if (typeof loggedInUser != "undefined" && loggedInUser.id == 1) {
@@ -57,33 +61,34 @@ router.get("/", function(req, res) {
         if (!error) {
           res.render("compositions/index", {compositions: compositions});
         } else {
-          // handle error
+          res.redirect("/");
         }
       });
+    }).catch(function(error) {
+      res.redirect("/");
     });
   } else {
     res.redirect("/");
   }
 });
 
+  // get form to create new composition
 router.get("/new", function(req, res) {
   res.render("compositions/new");
-});
-
-router.get("/code", function(req, res) {
-  res.render("compositions/code");
 });
 
 // FIXME: make this a global variable
 var NODE_ENV = process.env.NODE_ENV || 'development';
 var BASE_URL = (NODE_ENV === 'production') ? 'https://bobtail-method-app.herokuapp.com' : 'http://localhost:3000';
 
+  // user posts composition data to send through email
 router.post("/mail", function(req, res) {
   var melodyString = req.body["composition-string"];
   var email = req.body["composition-email"] || "";
   res.redirect("mailto:" + email + "?subject=Your%20Bobtail%20Method%20composition&body=%0D" + Array(56).join("_") + "%0D%0D" + BASE_URL + "/" + melodyString + "%0A" + Array(56).join("_"));
 });
 
+  // user posts composition data to save to database
 router.post("/", function(req, res) {
   var loggedInUser = req.user;
   if (loggedInUser) {
@@ -108,6 +113,8 @@ router.post("/", function(req, res) {
 
 });
 
+  // get specific composition
+  // FIXME: this should probably use include, rather than so many nested finds
 router.get("/:id", function(req, res) {
   db.composition.find(req.params.id).then(function(composition) {
     db.critique.findAll({where: {compositionId: composition.id}}).then(function(critiques) {
@@ -141,12 +148,12 @@ router.get("/:id", function(req, res) {
   });
 });
 
+  // user deletes composition
 router.delete("/:id", function(req, res) {
-  console.log("delete called");
   db.composition.destroy({where: {id:req.params.id}}).then(function() {
     res.send({result:true});
   }).catch(function(error) {
-    res.redirect()
+    res.redirect("/");
   });
 })
 

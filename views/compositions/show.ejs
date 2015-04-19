@@ -28,7 +28,7 @@
         <% composition.critiques.forEach(function(critique) { %>
         <tr>
           <% if (critique.picUrl) { %>
-          <td><img class="thumbnail-avatar" src="<%= critique.picUrl %>"></td>
+          <td><div class="avatar"><img class="avatar-image thumbnail-avatar" src="<%= critique.picUrl %>"></div></td>
           <% } else { %>
           <td></td>
           <% } %>

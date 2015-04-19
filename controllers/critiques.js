@@ -3,6 +3,7 @@ var express = require('express');
 var router = express.Router();
 var async = require('async');
 
+  // user posts critique for composition
 router.post("/", function(req, res) {
   if (req.user) {
     var comment = req.body.comment;

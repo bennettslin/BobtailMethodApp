@@ -11,9 +11,6 @@ module.exports = {
       melody: {
         type: DataTypes.STRING
       },
-      harmony: {
-        type: DataTypes.STRING
-      },
       userId: {
         type: DataTypes.INTEGER
       },
