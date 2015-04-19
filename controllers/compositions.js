@@ -23,6 +23,8 @@ var addComposerName = function(composition, callback) {
         var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
         composition.picUrl = picUrl;
         callback();
+      } else {
+        callback();
       }
     }).catch(function(error) {
       callback(error);
