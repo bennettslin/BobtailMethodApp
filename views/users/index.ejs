@@ -20,11 +20,11 @@
           <% } %>
 
           <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
-            <td><a href="/users/<%= user.id %>"><%= user.name %></a> (you)</td>
+            <td><a href="/users/<%= user.id %>"><%= user.firstname + " " + user.lastname %></a> (you)</td>
           <% } else { %>
-            <td><a href="/users/<%= user.id %>"><%= user.name %></a></td>
+            <td><a href="/users/<%= user.id %>"><%= user.firstname + " " + user.lastname %></a></td>
           <% } %>
-          <td><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></td>
+          <td><a href="/users/compositions/<%= user.id %>"><%= user.firstname %>'s compositions</a></td>
         </tr>
     <% }) %>
     </tbody>

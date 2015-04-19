@@ -17,7 +17,7 @@ var renderCompositionsShow = function(composition, req, res) {
   // add composer name and pic url, if found
 var addComposerName = function(composition, callback) {
   db.user.find(composition.userId).then(function(user) {
-    composition.composerName = user.name;
+    composition.composerName = user.firstname + " " + user.lastname;
     db.provider.find({where: {userId: user.id}}).then(function(provider) {
       if (provider.type == 'facebook') {
         var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
@@ -36,7 +36,7 @@ var addComposerName = function(composition, callback) {
   // add critic name, if found
 var addCriticName = function(critique, callback) {
   db.user.find(critique.userId).then(function(user) {
-    critique.criticName = user.name;
+    critique.criticName = user.firstname + " " + user.lastname;
     db.provider.find({where: {userId: user.id}}).then(function(provider) {
       if (provider.type == 'facebook') {
         var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
@@ -123,7 +123,7 @@ router.get("/:id", function(req, res) {
         if (!error) {
           composition.critiques = critiques;
           db.user.find(composition.userId).then(function(user) {
-            composition.composerName = user.name;
+            composition.composerName = user.firstname + " " + user.lastname;
             db.provider.find({where: {userId: user.id}}).then(function(provider) {
               if (provider.type == 'facebook') {
                 var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";

@@ -38,7 +38,9 @@ router.post("/signup",function(req,res) {
 
   var userQuery = {email: req.body.email};
   var userData = {email: req.body.email,
-                  name: req.body.name,
+                  // name: req.body.name,
+                  firstname: req.body.firstname,
+                  lastname: req.body.lastname,
                   password: req.body.password};
 
   // "where" key is to find, "defaults" is to create

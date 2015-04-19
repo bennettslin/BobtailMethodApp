@@ -6,16 +6,16 @@
     <% } %>
 
     <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
-      <h1>About <%= user.name %> (you)</h1>
+      <h1>About <%= user.firstname + " " + user.lastname %> (you)</h1>
     <% } else { %>
-      <h1>About <%= user.name %></h1>
+      <h1>About <%= user.firstname + " " + user.lastname %></h1>
     <% } %>
 
     <ul class="list-group">
       <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
         <li class="list-group-item"><%= user.email %> (only visible to you)</li>
       <% } %>
-      <li class="list-group-item"><a href="/users/compositions/<%= user.id %>"><%= user.name %>'s compositions</a></li>
+      <li class="list-group-item"><a href="/users/compositions/<%= user.id %>"><%= user.firstname %>'s compositions</a></li>
     </ul>
   </div>
 

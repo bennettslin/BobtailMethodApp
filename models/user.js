@@ -22,7 +22,7 @@ module.exports = function(sequelize, DataTypes) {
           msg: "First name must be between 1 and 32 characters."
         }
       },
-      allowNull: true
+      allowNull: false
     },
     lastname: {
       type: DataTypes.STRING,
@@ -32,7 +32,7 @@ module.exports = function(sequelize, DataTypes) {
           msg: "Last name must be between 1 and 32 characters."
         }
       },
-      allowNull: true
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,

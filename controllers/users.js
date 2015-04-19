@@ -8,6 +8,10 @@ var getFacebookFriendUserId = function(friend, callback) {
   db.provider.find({where: {pid: friend.id}}).then(function(provider) {
 
     friend.id = provider.userId;
+    var names = friend.name.split(" ");
+    console.log("names is", names);
+    friend.firstname = names[0];
+    friend.lastname = names[1];
     var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
     friend.picUrl = picUrl;
     callback();
@@ -49,8 +53,9 @@ router.get("/friends/:id", function(req, res) {
 
         request(friendsUrl, function (error, response, body) {
           if (!error && response.statusCode == 200) {
-            console.log("no error, friends array");
             var friendsArray = JSON.parse(body).data;
+            console.log("no error, friends array", friendsArray);
+
             async.each(friendsArray, getFacebookFriendUserId, function(error) {
               user.friends = friendsArray;
               res.render("users/friends", {user: user});
