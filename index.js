@@ -17,16 +17,15 @@ db.user.findAll().then(function(users) {
   })
 })
 
-// db.user.find(1).then(function(user) {
-//   user.firstname = "Bennett";
-//   user.lastname = "Lin";
-//   console.log("user saved", user.name, user.firstname, user.lastname);
-//   user.save().then(function() {
-//     console.log("user was saved!", user);
-//   }).catch(function(error) {
-//     console.log("user was not saved error", error);
-//   });
-// })
+db.user.find(9).then(function(user) {
+  user.lastname = "Smith";
+  console.log("user saved", user.name, user.firstname, user.lastname);
+  user.save().then(function() {
+    console.log("user was saved!", user);
+  }).catch(function(error) {
+    console.log("user was not saved error", error);
+  });
+})
 
 var NODE_ENV = process.env.NODE_ENV || 'development';
 var BASE_URL = (NODE_ENV === 'production') ? 'https://bobtail-method-app.herokuapp.com' : 'http://localhost:3000';
