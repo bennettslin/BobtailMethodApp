@@ -65,7 +65,7 @@ router.get("/", function(req, res) {
         if (!error) {
           res.render("compositions/index", {compositions: compositions});
         } else {
-          req.flash("danger", "Unable to find composer names for all compositions.")
+          req.flash("danger", "Unable to find all composers.")
           res.redirect("/");
         }
       });
@@ -74,7 +74,6 @@ router.get("/", function(req, res) {
       res.redirect("/");
     });
   } else {
-    req.flash("danger", "You are not Bennett Lin.")
     res.redirect("/");
   }
 });

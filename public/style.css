@@ -74,6 +74,7 @@
 
 body {
   background-color: #F0EAD6;
+  padding-top: 70px;
 }
 
 p {
@@ -184,4 +185,20 @@ h1 {
 
 .test {
   background-color: red;
+}
+
+footer {
+  color: #aaa;
+  text-align: center;
+  position: relative;
+  margin-top: 50px;
+  height: 50px;
+  clear: both;
+}
+
+
+.abc {
+  color: brown;
+  width: 400px;
+  height: 125px;
 }

@@ -13,8 +13,13 @@
       <tbody>
       <% compositions.forEach(function(composition) { %>
         <tr>
+          <td colspan="4">
+            <% include ../partials/staff %>
+          </td>
+        </tr>
+        <tr>
           <% if (composition.picUrl) { %>
-            <td>    <div class="avatar"><img src="<%= composition.picUrl %>" class="avatar-image"></div></td>
+            <td><div class="avatar"><img src="<%= composition.picUrl %>" class="avatar-image"></div></td>
           <% } else { %>
             <td></td>
           <% } %>

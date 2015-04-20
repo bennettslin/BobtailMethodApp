@@ -18,9 +18,18 @@ $(function() {
   });
 
   // creates a string literal from chords and notes chosen through grid interface
-  // illegal compositional elements are converted to +s or -s
+  // illegal compositional elements are converted to "+"s or "-"s
   var getMelodyString = function() {
     var myString = "";
+
+    var signatureValue = $('.select-signature').val();
+    if (parseInt(signatureValue) == -1) {
+      myString = myString.concat("-");
+    } else {
+      var mySig = parseInt(signatureValue);
+      myString = myString.concat(String.fromCharCode(mySig + 65));
+    }
+
 
     for (var i = 0; i < 3; i++) {
       var keyValue = $('.select-key-' + i).val();

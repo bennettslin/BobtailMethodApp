@@ -112,17 +112,30 @@ app.use(function(req, res, next) {
     var keys = [];
     var chords = [];
     var pitches = [];
+    var signature;
 
       // string literal fails if less than 24 characters
-    if (code.length < 24) {
+    if (code.length < 25) {
       return false;
     } else {
 
-        // first 6 characters are chord roots and types
-      for (var i = 0; i < 6; i++) {
+      // first character is key signature
+      if (code[0] == '-') {
+        signature = -1;
+      } else {
+        var codedSign = code.charCodeAt(0) - 65;
+        if (!isNaN(codedSign) && codedSign >= 0 && codedSign < 12) {
+          signature = codedSign;
+        } else {
+          return false;
+        }
+      }
+
+        // next 6 characters are chord roots and types
+      for (var i = 1; i < 7; i++) {
 
           // this is a chord root
-        if (i % 2 == 0) {
+        if (i % 2 == 1) {
           if (code[i] == '+') {
             keys.push(code[i]);
           } else {
@@ -150,7 +163,7 @@ app.use(function(req, res, next) {
       }
 
         // next 18 characters are notes in the melody
-      for (var i = 6; i < 24; i++) {
+      for (var i = 7; i < 25; i++) {
         if (code[i] == '-') {
           pitches.push(code[i]);
         } else {
@@ -162,7 +175,7 @@ app.use(function(req, res, next) {
           }
         }
       }
-      return {activePitches: pitches, keys: keys, activeChords: chords};
+      return {activePitches: pitches, keys: keys, activeChords: chords, signature: signature};
     }
   };
   next();

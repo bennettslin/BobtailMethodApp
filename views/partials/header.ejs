@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Bobtail Method app</title>
+
   <!-- Latest compiled and minified CSS & JS -->
   <link rel="stylesheet" media="screen" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="//code.jquery.com/jquery.js"></script>
@@ -10,10 +11,17 @@
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <link href='http://fonts.googleapis.com/css?family=Playfair+Display:400,400italic|Open+Sans:400italic,400' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" type="text/css" href="/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.2/raphael-min.js"></script>
   <script src="/script.js"></script>
+  <script src="/abcjs_plugin_noraphael_nojquery_2.0-min.js"></script>
+  <script>ABCJS.plugin.hide_abc = true;</script>
+  <script>ABCJS.plugin.render_options = {staffwidth:600, paddingleft:0, paddingright:0};</script>
+
 </head>
 <body>
-  <nav class="navbar navbar-default" role="navigation">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <!-- Keeps navbar from being crazy -->
+  <div class="container position-relative">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -52,6 +60,7 @@
           <li><a href="/auth/signup" class="btn btn-success">Sign up</a></li>
         <% } %>
       </ul>
+      </div>
     </div><!-- /.navbar-collapse -->
   </nav>
 

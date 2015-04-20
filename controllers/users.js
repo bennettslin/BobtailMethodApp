@@ -7,9 +7,9 @@ var request = require('request');
 var getFacebookFriendUserId = function(friend, callback) {
   db.provider.find({where: {pid: friend.id}}).then(function(provider) {
 
+    // FIXME: So that this gets friend firstname and lastname from user.id
     friend.id = provider.userId;
     var names = friend.name.split(" ");
-    console.log("names is", names);
     friend.firstname = names[0];
     friend.lastname = names[1];
     var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
