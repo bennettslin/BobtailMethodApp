@@ -109,6 +109,7 @@ $(function() {
       $(this).removeClass('play');
       $(this).html("<i class='glyphicon glyphicon-stop'></i>");
       var melodyString = $(this).attr('data-id') || getMelodyString();
+      console.log("melody string is", melodyString);
       playString(melodyString);
 
       //user clicked stop button
@@ -142,7 +143,7 @@ $(function() {
     }
     var pitch = parseInt($(this).attr('data-y'));
     var oscillator = cellAudioContext.createOscillator();
-    playCharCode(pitch + 79, oscillator, true);
+    playCharCode(pitch + 81, oscillator, true);
   });
 
     // play notes from typing in keys; uncomment for fun
@@ -196,13 +197,13 @@ $(function() {
     string = string.toUpperCase();
 
     for (var i = 0; i < 3; i++) {
-      var rootCharCode = string.charCodeAt(i * 2) + 17;
+      var rootCharCode = string.charCodeAt(i * 2 + 1) + 17;
       if (rootCharCode >= 82 && rootCharCode <= 93) {
 
           // play bass
         setNewOscillator(rootCharCode, "sine", -1, i, 1.8, gainNode);
 
-        var chord = string.charCodeAt(i * 2 + 1) - 65;
+        var chord = string.charCodeAt(i * 2 + 2) - 65;
 
         // play chord root, keep within octave range
         if (chord >= 0 && chord < 4) {
@@ -243,9 +244,9 @@ $(function() {
     }
 
     // play the melody
-    for (var j = 6; j < 24; j++) {
+    for (var j = 7; j < 25; j++) {
       if (string[j] != "-") {
-        setNewOscillator(string.charCodeAt(j), "custom", 1, j - 6, 0.3, gainNode);
+        setNewOscillator(string.charCodeAt(j) + 2, "custom", 1, j - 7, 0.3, gainNode);
       }
     }
   }
