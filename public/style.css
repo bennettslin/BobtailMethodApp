@@ -85,6 +85,10 @@ ul {
   font-family: 'Open Sans', sans-serif;
 }
 
+ul li {
+  text-decoration: none;
+}
+
 ol {
   font-family: 'Open Sans', sans-serif;
 }
@@ -102,6 +106,10 @@ a {
 }
 
 h1 {
+  font-family: 'Playfair Display', serif;
+}
+
+h2 {
   font-family: 'Playfair Display', serif;
 }
 
@@ -136,7 +144,7 @@ h1 {
 }
 
 .cell {
-  height: 16px;
+  height: 12px;
   width: 30px;
   font-size: 8px;
 }
@@ -195,7 +203,6 @@ footer {
   height: 50px;
   clear: both;
 }
-
 
 .abc {
   color: brown;

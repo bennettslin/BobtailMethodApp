@@ -1,21 +1,80 @@
 <% include ../partials/header %>
 
-  <div class="col-sm-6 col-sm-offset-3">
-    <h1>Get Started with Bobtail Method</h1>
+<script>ABCJS.plugin.render_options = {staffwidth:475, paddingtop:0, paddingleft:0, paddingright:0, paddingbottom:0};</script>
 
+<% var instructionArray = [
+  "Pick chords for the first two bars, along with a sensible key signature.",
+  "Write a melody underneath those chords.",
+  "Extend the melody into the third bar.",
+  "Choose a chord for the third bar.",
+  "Embellish and revise the melody.",
+  "An easy way to start the melody is by arpeggiating chords, or by repeating and developing a motif. For example:",
+  "...can then be embellished to become:",
+  "An interesting melodic contour is aided by a variety of note durations, pitch intervals, and registers, as well as unique low and high points in the pitch range:",
+  "Spice up harmonic progressions with modal mixture, in which a major chord is swapped with its minor equivalent, or vice versa:",
+  "...or include augmented and diminished chords:",
+  "Extended chords such as sevenths and ninths can be implied by strategically positioning nontriad tones in the melody.",
+  "Compound melodies are single melodies that can be separated by the ear into two or more distinct lines occupying different registers:"]; %>
+<% var abcArray = [
+'"G" x3 x3 | "D" x3 x3 | x3 x3',
+'"G" G3 B2d | "D" d2A F2d | x3 x3',
+'"G" G3 B2d | "D" d2A F2d | c2A c3',
+'"G" G3 B2d | "D" d2A F2d | "A" c2A c3',
+'"G" G3 Bcd | "D" c2A Fed | "A" cEA B2c',
+'"Dm" Adf gec | "Gm" Adf gec | "Bb" Adf gec',
+'"Dm" e2f ecA | "Gm" B2f gec | "Bb" Adf gad',
+'"D" BcB F2A | "E" dGB edc | "A" B2c AGE',
+'"Fm" f2=e c2d | "Dbm" _edA _Fdc | "Cm" EBG E3',
+'"Bb" G2A B2c | "Fdim" d2c =Bef | "Eb" dGB cdc',
+'"G" gfe d2c | "E" Bcd =fed | "F" ecB A3',
+'"Dm" d2^c A2B | "Bbm" =cBF _DBA | "Am" CGE C3']; %>
+<% var keyArray = ["F", "F", "A", "Ab", "Bb", "G", "F"] %>
+
+  <div class="col-sm-6 col-sm-offset-3">
+    <h1>Quick Guide</h1>
+    <h2>How to Get Started</h2>
     <p>
       We start with a three-bar staff in 6/8 meter. Across the first barline, the harmony informs the melody, while across the second barline, the melody informs the harmony.
     </p>
-
     <ol>
-      <li>Pick chords for the first two bars.</li>
-      <li>Write a melody underneath those chords.</li>
-      <li>Extend the melody into the third bar.</li>
-      <li>Choose a chord for the third bar.</li>
-      <li>Revise, polish, and finish.</li>
+    <% for (var i = 0; i < 5; i++) { %>
+      <li><%= instructionArray[i] %></li>
+      <div class="abc" id="<%= i %>">
+X:<%= i %>
+M:none
+L:1/8
+K:D
+<%= abcArray[i] %>
+      </div>
+    <% } %>
     </ol>
 
-    <p>That's it! You now have thematic material by which to flesh out your composition!</p>
+    <p>That's it! You now have thematic material by which to flesh out your composition.</p>
+    <h2>Guiding Principles</h2>
+
+    <p>
+      While there are no hard and fast rules, interesting melodies typically share similar traits, so here are some useful tips to keep in mind.
+    </p>
+
+    <ul>
+    <% for (var i = 5; i < 12; i++) { %>
+      <% if (i == 6 || i == 9) { %>
+        <%= instructionArray[i] %>
+      <% } else { %>
+      <li><%= instructionArray[i] %></li>
+      <% } %>
+
+      <div class="abc" id="<%= i %>">
+X:<%= i %>
+M:none
+L:1/8
+K:<%= keyArray[i - 5] %>
+<%= abcArray[i] %>
+      </div>
+    <% } %>
+    </ul>
+
+    <p>For further guidance along with a detailed lesson plan, you can download my book <i>The Bobtail Method for Composing Unique Pop Melodies</i>, originally published in 2008 and now available as a <a href="http://bobtailyearlings.com/bobtail_method.pdf">free pdf</a>.</p>
   </div>
 
 <% include ../partials/footer %>
