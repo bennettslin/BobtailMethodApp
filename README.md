@@ -21,7 +21,6 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 + Connect play buttons in howto page
 + Have key signature default to C major
 + remove name from user
-+ add title to composition
 + hide friends list when not Facebook user
 
 ### Known knowns
