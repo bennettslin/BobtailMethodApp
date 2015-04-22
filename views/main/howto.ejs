@@ -1,6 +1,6 @@
 <% include ../partials/header %>
 
-<script>ABCJS.plugin.render_options = {staffwidth:475, paddingtop:0, paddingleft:0, paddingright:0, paddingbottom:0};</script>
+<script>ABCJS.plugin.render_options = {staffwidth:475, paddingtop:0, paddingleft:0, paddingright:0, paddingbottom:0, add_classes:true};</script>
 
 <% var instructionArray = [
   "Pick chords for the first two bars, along with a sensible key signature.",
@@ -46,6 +46,7 @@ L:1/8
 K:D
 <%= abcArray[i] %>
       </div>
+      <button class="playback-button btn btn-primary play"><i class="glyphicon glyphicon-play"></i></button>
     <% } %>
     </ol>
 
@@ -71,6 +72,7 @@ L:1/8
 K:<%= keyArray[i - 5] %>
 <%= abcArray[i] %>
       </div>
+      <button class="playback-button btn btn-primary play"><i class="glyphicon glyphicon-play"></i></button>
     <% } %>
     </ul>
 

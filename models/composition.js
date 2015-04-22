@@ -3,6 +3,12 @@ var db = require('../models');
 
 module.exports = function(sequelize, DataTypes) {
   var composition = sequelize.define("composition", {
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+
+      },
+    },
     melody: {
       type: DataTypes.STRING,
       validate: {

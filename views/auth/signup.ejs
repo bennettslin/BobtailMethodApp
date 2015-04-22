@@ -3,12 +3,14 @@
 <div class="col-sm-6 col-sm-offset-3">
   <h1>Sign up!</h1>
   <form class="form" method="post" action="/auth/signup">
-    <input type="text" class="form-control" placeholder="Enter your email" name="email">
-    <input type="text" class="form-control" placeholder="Enter your first name" name="firstname">
-    <input type="text" class="form-control" placeholder="Enter your last name" name="lastname">
-    <input type="password" class="form-control" placeholder="Choose a password" name="password">
-    <input type="submit" value="Sign up" class="btn btn-success"> or
-    <a href="/auth/login/facebook" class="btn btn-primary">Sign up with <i class="fa fa-facebook"></i></a>
+    <p><input type="email" class="form-control" placeholder="Enter your email" name="email"></p>
+    <p><input type="text" class="form-control" placeholder="Enter your first name" name="firstname"></p>
+    <p><input type="text" class="form-control" placeholder="Enter your last name" name="lastname"></p>
+    <p><input type="password" class="form-control" placeholder="Choose a password" name="password"></p>
+    <fieldset>
+      <p><input type="submit" value="Sign up" class="btn btn-success form-button"> or
+      <a href="/auth/login/facebook" class="btn btn-primary form-button"><i class="fa fa-facebook"></i> | Sign up with Facebook</a></p>
+    </fieldset>
   </form>
 </div>
 

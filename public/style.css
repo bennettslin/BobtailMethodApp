@@ -208,4 +208,21 @@ footer {
   color: brown;
   width: 400px;
   height: 125px;
+  border: 1px solid red;
+}
+
+.chord {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+fieldset {
+
+}
+
+.form-button {
+  margin: auto 10px;
+}
+
+.playback-button {
+  display: inline;
 }
