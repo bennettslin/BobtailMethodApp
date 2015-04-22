@@ -42,7 +42,10 @@
 
         <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
           <li><a href="/users/compositions/<%= loggedInUser.id %>">My Compositions</a></li>
+          <% if (typeof loggedInUser != 'undefined' && !loggedInUser.password) { %>
           <li><a href="/users/friends/<%= loggedInUser.id %>">My Friends</a></li>
+          <% } %>
+
         <% } else { %>
         <% } %>
         <li><a href="/compositions/new">New Composition</a></li>
@@ -53,7 +56,7 @@
 
         <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
 
-          <li><a href="/users/<%= loggedInUser.id %>" class="btn btn-info"><i class="glyphicon glyphicon-user"></i> <%= typeof loggedInUser.name === 'string' ? loggedInUser.name : 'Unknown' %></a></li>
+          <li><a href="/users/<%= loggedInUser.id %>" class="btn btn-info"><i class="glyphicon glyphicon-user"></i> <%= typeof loggedInUser.firstname === 'string' ? loggedInUser.firstname : 'Unknown' %></a></li>
           <li><a href="/auth/logout" class="btn">Log out</a></li>
         <% } else { %>
           <li><a href="/auth/login" class="btn"><i class="glyphicon glyphicon-user"></i> Log in</a></li>
