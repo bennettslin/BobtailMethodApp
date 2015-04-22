@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/html1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bobtail Method app</title>
 
   <!-- Latest compiled and minified CSS & JS -->
@@ -37,7 +38,6 @@
       <ul class="nav navbar-nav">
         <% if (typeof loggedInUser != 'undefined' && loggedInUser.id == 1) { %>
           <li><a href="/users" class="btn btn-warning">All Users</a></li>
-          <li><a href="/compositions" class="btn btn-warning">All Compositions</a></li>
         <% } %>
 
         <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>

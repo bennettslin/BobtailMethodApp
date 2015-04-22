@@ -16,7 +16,6 @@ var getFacebookFriendUserId = function(friend, callback) {
     }).catch(function(error) {
       callback(error);
     })
-
   }).catch(function(error) {
     callback(error);
   })

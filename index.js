@@ -220,11 +220,11 @@ app.use(function(req, res, next) {
   next();
 })
 
-app.use('/', require('./controllers/main.js'));
 app.use('/compositions', require('./controllers/compositions.js'));
 app.use('/auth',require('./controllers/auth.js'));
 app.use('/critiques', require('./controllers/critiques.js'));
 app.use('/users', require('./controllers/users.js'));
+app.use('/', require('./controllers/main.js'));
 
 app.get("/:code", function(req, res) {
   var stringCode = req.params.code;

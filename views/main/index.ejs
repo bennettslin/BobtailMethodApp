@@ -1,22 +1,35 @@
 <% include ../partials/header %>
 
   <div class="col-sm-6 col-sm-offset-3">
-    <h1>What is Bobtail Method?</h1>
-
-    <p>
-      Most songs today are written by layering melodies atop a looped harmonic progression. There's nothing wrong with this approach. However:
-    </p>
-
-    <ul>
-      <li>It's awfully commonplace.</li>
-      <li>Melodies can sound arbitrary, or conceived as an afterthought.</li>
-      <li>The classics of the past were obviously not written this way.</li>
-    </ul>
-
-    <p>
-      Bobtail Method teaches today's aspiring songwriters to write songs the classic way. That is to say, melody and harmony are written <em>simultaneously</em>, each informing the other in equal measures.
-    </p>
-
+    <h1>Latest compositions</h1>
+    <table class="table table-hover">
+      <thead>
+          <th>Avatar</th>
+          <th>Composer name</th>
+          <th>Melody String</th>
+          <th>Playback</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% compositions.forEach(function(composition) { %>
+        <tr>
+          <td colspan="4">
+            <% include ../partials/staff %>
+          </td>
+        </tr>
+        <tr>
+          <% if (composition.picUrl) { %>
+            <td><div class="avatar"><img src="<%= composition.picUrl %>" class="avatar-image"></div></td>
+          <% } else { %>
+            <td></td>
+          <% } %>
+          <td><a href="/users/<%= composition.userId %>"><%= composition.composerName %></a></td>
+          <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
+          <td><button data-id="<%= composition.melody %>" class="playback-button play btn btn-primary"><i class="glyphicon glyphicon-play"></i></button></td>
+        </tr>
+      <% }) %>
+      </tbody>
+    </table>
   </div>
 
 <% include ../partials/footer %>

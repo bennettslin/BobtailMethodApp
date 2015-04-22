@@ -57,26 +57,21 @@ var addCriticName = function(critique, callback) {
 }
 
   // get index of compositions
-router.get("/", function(req, res) {
-  var loggedInUser = req.user;
-  if (typeof loggedInUser != "undefined" && loggedInUser.id == 1) {
-    db.composition.findAll().then(function(compositions) {
-      async.each(compositions, addComposerName, function(error) {
-        if (!error) {
-          res.render("compositions/index", {compositions: compositions});
-        } else {
-          req.flash("danger", "Unable to find all composers.")
-          res.redirect("/");
-        }
-      });
-    }).catch(function(error) {
-      req.flash("danger", "Unable to find all compositions");
-      res.redirect("/");
-    });
-  } else {
-    res.redirect("/");
-  }
-});
+// router.get("/", function(req, res) {
+//   db.composition.findAll().then(function(compositions) {
+//     async.each(compositions, addComposerName, function(error) {
+//       if (!error) {
+//         res.render("compositions/index", {compositions: compositions});
+//       } else {
+//         req.flash("danger", "Unable to find all composers.")
+//         res.redirect("/main/about");
+//       }
+//     });
+//   }).catch(function(error) {
+//     req.flash("danger", "Unable to find all compositions.");
+//     res.redirect("/main/about");
+//   });
+// });
 
   // get form to create new composition
 router.get("/new", function(req, res) {
@@ -122,6 +117,7 @@ router.post("/", function(req, res) {
   // get specific composition
   // FIXME: this should probably use include, rather than so many nested finds
 router.get("/:id", function(req, res) {
+  console.log("params is", req.params.id);
   db.composition.find(req.params.id).then(function(composition) {
     db.critique.findAll({where: {compositionId: composition.id}}).then(function(critiques) {
       critiques = critiques || [];
@@ -145,7 +141,7 @@ router.get("/:id", function(req, res) {
       });
 
     }).catch(function(error) {
-      req.flash("danger", "This composition doesn't exist.");
+      req.flash("danger", "This critique doesn't exist.");
       res.redirect("/");
     });
   }).catch(function(error) {

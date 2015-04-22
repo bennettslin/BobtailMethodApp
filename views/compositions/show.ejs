@@ -42,7 +42,6 @@
     </table>
     <% if (typeof loggedInUser != 'undefined' && loggedInUser) { %>
     <form class="form" action="/critiques" method="POST">
-      <legend>New critique</legend>
       <div class="form-group col-sm-4">
         <input type="text" class="form-control" name="comment" placeholder="Add a comment">
         <input type="hidden" name="id" value="<%= composition.id %>">
