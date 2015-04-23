@@ -82,30 +82,17 @@ router.get("/howto", function(req, res) {
   ];
 
   var abcArray = [];
+  var dataIdArray = [];
 
   for (var i = 0; i < rawAbcArray.length; i++) {
     if (i < 5) {
-      abcArray.push('%%staffwidth 400\\nX:' + i + '\\nM:none\\nL:1/8\\nK:D\\n' + rawAbcArray[i] + '\\n');
+      abcArray.push('X:' + i + '\\nM:none\\nL:1/8\\nK:D\\n' + rawAbcArray[i] + '\\n');
     } else {
-      abcArray.push('%%staffwidth 400\\n%%add_classes true\\nX:' + i + '\\nM:none\\nL:1/8\\nK:' + keyArray[i - 5] + '\\n' + rawAbcArray[i] + '\\n');
+      abcArray.push('X:' + i + '\\nM:none\\nL:1/8\\nK:' + keyArray[i - 5] + '\\n' + rawAbcArray[i] + '\\n');
     }
-  }
 
-  // FIXME: change hard-coded data-id melody
-  var dataIdArray = [
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-  ]
+    dataIdArray.push(req.getCodeFromAbc(rawAbcArray[i]));
+  }
 
   res.render("main/howto", {instructionArray: instructionArray, abcArray: abcArray, dataIdArray: dataIdArray});
 });

@@ -107,6 +107,22 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function(req, res, next) {
+  // FIXME: change hard-coded data
+  req.getAbcFromCode = function(code) {
+    return '"Dm" d2^c A2B | "Bbm" =cBF _DBA | "Am" CGE C3';
+  }
+  next();
+})
+
+app.use(function(req, res, next) {
+  // FIXME: change hard-coded data
+  req.getCodeFromAbc = function(abc) {
+    return "DCADBEDYXWVUTSRPONMLKJIHI";
+  }
+  next();
+})
+
+app.use(function(req, res, next) {
   req.getCompositionFromCode = function(code) {
     code = code.toUpperCase();
     var keys = [];
@@ -120,15 +136,11 @@ app.use(function(req, res, next) {
     } else {
 
       // first character is key signature
-      if (code[0] == '-') {
-        signature = -1;
+      var codedSign = code.charCodeAt(0) - 65;
+      if (!isNaN(codedSign) && codedSign >= 0 && codedSign < 12) {
+        signature = codedSign;
       } else {
-        var codedSign = code.charCodeAt(0) - 65;
-        if (!isNaN(codedSign) && codedSign >= 0 && codedSign < 12) {
-          signature = codedSign;
-        } else {
-          return false;
-        }
+        return false;
       }
 
         // next 6 characters are chord roots and types

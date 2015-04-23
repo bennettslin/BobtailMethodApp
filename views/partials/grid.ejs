@@ -4,9 +4,9 @@
 
 <div class="">
   <select class="select-signature" <%=(typeof signature != "undefined" ? "disabled" : "") %>>
-    <% for (var j = -1; j < 12; j++) { %>
+    <% for (var j = 0; j < 12; j++) { %>
     <!-- key signature is at index 0 -->
-    <option <%=(typeof signature != "undefined" && signature == j ? "selected" : "") %> value="<%= j %>"><%= j == -1 ? "(key signature)" : signatures[j] %></option>
+    <option <%=((typeof signature == "undefined" && j == 5) || (typeof signature != "undefined" && signature == j) ? "selected" : "") %> value="<%= j %>"><%= signatures[j] %></option>
     <% } %>
   </select>
 </div>

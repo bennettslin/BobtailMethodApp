@@ -19,12 +19,12 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 ## Things left to fix
 + Add bio to about page
 + Connect play buttons in howto page
-+ Have key signature default to C major
 + pagination
-+ double quotes!!
++ let user add composition title
++ allow New from Copy option
++ methods for code to abc and abc to code
 
 ### Known knowns
-+ Users should be able to update profiles, including uploading cover pictures.
 + Users should be able to add titles and descriptions to compositions, and update them. They should also be able to delete their own critiques, as well as those left by others.
 + Refactoring.
 + Content can be improved.
@@ -37,4 +37,3 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 ### Unknown unknowns
 + Sound is God-awful... Figure out how to implement sound fonts, or else tinker with waveforms and envelopes.
 + Stop button should change back to play when playback completes.
-+ Show notated music on staff line rather than string literal.
