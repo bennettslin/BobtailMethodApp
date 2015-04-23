@@ -106,21 +106,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
-  // FIXME: change hard-coded data
-  req.getAbcFromCode = function(code) {
-    return '"Dm" d2^c A2B | "Bbm" =cBF _DBA | "Am" CGE C3';
-  }
-  next();
-})
-
-app.use(function(req, res, next) {
-  // FIXME: change hard-coded data
-  req.getCodeFromAbc = function(abc) {
-    return "DCADBEDYXWVUTSRPONMLKJIHI";
-  }
-  next();
-})
 
 app.use(function(req, res, next) {
   req.getCompositionFromCode = function(code) {
@@ -190,6 +175,43 @@ app.use(function(req, res, next) {
       return {activePitches: pitches, keys: keys, activeChords: chords, signature: signature};
     }
   };
+  next();
+})
+
+app.use(function(req, res, next) {
+  req.getAbcFromCode = function(code) {
+
+      // get object with pitches (activePitches), chord roots (keys), chord types (chords), and key signature(signature)
+    var composition = req.getCompositionFromCode(code);
+    if (!composition) {
+      return 'K:C\\n x3 x3 | x3 x3 | x3 x3';
+    }
+
+    var signatures = ["D\u266D", "A\u266D", "E\u266D", "B\u266D", "F", "C", "G", "D", "A", "E", "B", "G\u266D"];
+
+    var chordRoots = ["A", "A\u266F/B\u266D", "B", "C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D", "G", "G\u266F/A\u266D"];
+
+      // FIXME: change "-" and "+" to -1
+      // FIXME: chord roots are offset
+      // add chord types
+      // consider accidentals based on keys
+      // consider note durations
+
+    var letterPitches = ["x", "A,", "_B,", "B,", "C", "_D", "D", "_E", "E", "F", "_G", "G", "_A", "A", "_B", "B", "c", "_d", "d", "_e", "e", "f", "_g", "g", "_a", "a" ];
+
+    var keys = [];
+    for (var i = 0; i < 3; i++) {
+      keys.push(chordRoots[composition.keys[i]]);
+    }
+
+    var notes = [];
+    for (var i = 0; i < 6; i++) {
+      notes.push(letterPitches[composition.activePitches[i * 3] + 1] + letterPitches[composition.activePitches[i * 3 + 1] + 1] + letterPitches[composition.activePitches[i * 3 + 2] + 1]);
+    }
+
+    var signature = signatures[composition.signature];
+    return 'K:' + signature + 'enter"' + keys[0] + '" ' + notes[0] + ' ' + notes[1] + ' | "' + keys[1] + '" ' + notes[2] + ' ' + notes[3] + ' | "' + keys[2] + '" ' + notes[4] + ' ' + notes[5];
+  }
   next();
 })
 

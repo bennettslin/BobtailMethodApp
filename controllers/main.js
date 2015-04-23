@@ -82,17 +82,33 @@ router.get("/howto", function(req, res) {
   ];
 
   var abcArray = [];
-  var dataIdArray = [];
 
   for (var i = 0; i < rawAbcArray.length; i++) {
     if (i < 5) {
-      abcArray.push('X:' + i + '\\nM:none\\nL:1/8\\nK:D\\n' + rawAbcArray[i] + '\\n');
+      abcArray.push('K:D\\n' + rawAbcArray[i] + '\\n');
     } else {
-      abcArray.push('X:' + i + '\\nM:none\\nL:1/8\\nK:' + keyArray[i - 5] + '\\n' + rawAbcArray[i] + '\\n');
+      abcArray.push('K:' + keyArray[i - 5] + '\\n' + rawAbcArray[i] + '\\n');
     }
 
-    dataIdArray.push(req.getCodeFromAbc(rawAbcArray[i]));
   }
+
+    // FIXME: eventually this will be the other way around; that is,
+    // start with melody code, and then get abc from code
+
+  var dataIdArray = [
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI"
+  ]
 
   res.render("main/howto", {instructionArray: instructionArray, abcArray: abcArray, dataIdArray: dataIdArray});
 });

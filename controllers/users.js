@@ -80,6 +80,11 @@ router.get("/compositions/:id", function(req, res) {
   db.user.find(req.params.id).then(function(user) {
     db.composition.findAll({where: {userId: user.id}}).then(function(compositions) {
       compositions = compositions || [];
+
+      compositions.forEach(function(composition) {
+        composition.abc = req.getAbcFromCode(composition.melody);
+      });
+
       user.compositions = compositions;
       db.provider.find({where: {userId: user.id}}).then(function(provider) {
         if (provider.type == 'facebook') {

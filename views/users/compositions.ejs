@@ -24,8 +24,9 @@
         <td colspan="3">
           <div id="abc-<%= composition.id %>" class="abc"></div>
           <script type="text/javascript">
-            var string = '%%staffwidth 400\n%%editable false\nX:1\nM: 6/8\nL: 1/8\nK: Emin\n"C" \^A,2B z3|"A\u266d" =e2_E GE2|"F\u266fm" F^FG A3|]\n';
-            ABCJS.renderAbc('abc-<%= composition.id %>', string);
+            var string = ('%%staffwidth 400\nX:' + '<%= composition.id %>' + '\nM:none\nL:1/8\n' + '<%= composition.abc %>').replace("enter", "\n").replace(/&#34;/g, '\"');
+            console.log(string);
+            ABCJS.renderAbc('abc-<%= composition.id %>', string, {}, {staffwidth: 475, add_classes: true}, {});
           </script>
         </td>
       </tr>
