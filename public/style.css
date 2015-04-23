@@ -208,7 +208,16 @@ footer {
   color: brown;
   width: 400px;
   height: 125px;
-  border: 1px solid red;
+  margin: -36px 0 36px 0;
+  /*border: 1px solid red;*/
+}
+
+.abc {
+  color: brown;
+  width: 400px;
+  height: 125px;
+  margin: -12px 0 12px 0;
+  /*border: 1px solid red;*/
 }
 
 .chord {

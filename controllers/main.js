@@ -49,7 +49,65 @@ router.get("/about", function(req, res) {
 });
 
 router.get("/howto", function(req, res) {
-  res.render("main/howto");
+  var instructionArray = [
+    "Pick chords for the first two bars, along with a sensible key signature.",
+    "Write a melody underneath those chords.",
+    "Extend the melody into the third bar.",
+    "Choose a chord for the third bar.",
+    "Embellish and revise the melody.",
+    "An easy way to start the melody is by arpeggiating chords, or by repeating and developing a motif. For example:",
+    "...can then be embellished to become:",
+    "An interesting melodic contour is aided by a variety of note durations, pitch intervals, and registers, as well as unique low and high points in the pitch range:",
+    "Spice up harmonic progressions with modal mixture, in which a major chord is swapped with its minor equivalent, or vice versa:",
+    "...or include augmented and diminished chords:",
+    "Extended chords such as sevenths and ninths can be implied by strategically positioning nontriad tones in the melody.",
+    "Compound melodies are single melodies that can be separated by the ear into two or more distinct lines occupying different registers:"
+  ];
+
+  var keyArray = ['F', 'F', 'A', 'Ab', 'Bb', 'G', 'F'];
+
+  var rawAbcArray = [
+    '"G" x3 x3 | "D" x3 x3 | x3 x3',
+    '"G" G3 B2d | "D" d2A F2d | x3 x3',
+    '"G" G3 B2d | "D" d2A F2d | c2A c3',
+    '"G" G3 B2d | "D" d2A F2d | "A" c2A c3',
+    '"G" G3 Bcd | "D" c2A Fed | "A" cEA B2c',
+    '"Dm" Adf gec | "Gm" Adf gec | "Bb" Adf gec',
+    '"Dm" e2f ecA | "Gm" B2f gec | "Bb" Adf gad',
+    '"D" BcB F2A | "E" dGB edc | "A" B2c AGE',
+    '"Fm" f2=e c2d | "Dbm" _edA _Fdc | "Cm" EBG E3',
+    '"Bb" G2A B2c | "Fdim" d2c =Bef | "Eb" dGB cdc',
+    '"G" gfe d2c | "E" Bcd =fed | "F" ecB A3',
+    '"Dm" d2^c A2B | "Bbm" =cBF _DBA | "Am" CGE C3'
+  ];
+
+  var abcArray = [];
+
+  for (var i = 0; i < rawAbcArray.length; i++) {
+    if (i < 5) {
+      abcArray.push('%%staffwidth 400\\nX:' + i + '\\nM:none\\nL:1/8\\nK:D\\n' + rawAbcArray[i] + '\\n');
+    } else {
+      abcArray.push('%%staffwidth 400\\n%%add_classes true\\nX:' + i + '\\nM:none\\nL:1/8\\nK:' + keyArray[i - 5] + '\\n' + rawAbcArray[i] + '\\n');
+    }
+  }
+
+  // FIXME: change hard-coded data-id melody
+  var dataIdArray = [
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+    "DCADBEDYXWVUTSRPONMLKJIHI",
+  ]
+
+  res.render("main/howto", {instructionArray: instructionArray, abcArray: abcArray, dataIdArray: dataIdArray});
 });
 
 router.get("/error", function(req, res) {

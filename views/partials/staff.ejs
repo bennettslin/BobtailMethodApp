@@ -1,12 +1,8 @@
-<script>ABCJS.plugin.render_options = {staffwidth:500, paddingtop:0, paddingleft:0, paddingright:0, paddingbottom:0, add_classes:true};</script>
-
-<div class="abc">
-X:1
-M:6/8
-L:1/8
-K:D
-"C" ^A,2B z3|"Aaug" =e2_E GE2|"F" F^FG A3|]
-</div>
+<div id="notation" class="abc"></div>
+<script type="text/javascript">
+  var string = '%%staffwidth 500\n%%editable false\n%%add_classes true\nX:1\nM: 6/8\nL: 1/8\nK: Emin\n"C" \^A,2B z3|"A\u266d" =e2_E GE2|"F\u266fm" F^FG A3|]\n';
+  ABCJS.renderAbc('notation', string);
+</script>
 
 <!-- about abc notation:
 

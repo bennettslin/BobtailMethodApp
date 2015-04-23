@@ -22,7 +22,11 @@
     <% user.compositions.forEach(function(composition) { %>
       <tr>
         <td colspan="3">
-          <% include ../partials/staff %>
+          <div id="abc-<%= composition.id %>" class="abc"></div>
+          <script type="text/javascript">
+            var string = '%%staffwidth 400\n%%editable false\nX:1\nM: 6/8\nL: 1/8\nK: Emin\n"C" \^A,2B z3|"A\u266d" =e2_E GE2|"F\u266fm" F^FG A3|]\n';
+            ABCJS.renderAbc('abc-<%= composition.id %>', string);
+          </script>
         </td>
       </tr>
       <tr>
@@ -36,5 +40,4 @@
     </tbody>
   </table>
 </div>
-
 <% include ../partials/footer %>

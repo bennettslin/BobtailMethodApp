@@ -15,27 +15,27 @@ var renderCompositionsShow = function(composition, req, res) {
 }
 
   // add composer name and pic url, if found
-var addComposerName = function(composition, callback) {
-  db.user.find(composition.userId).then(function(user) {
-    composition.composerName = user.firstname + " " + user.lastname;
+// var addComposerName = function(composition, callback) {
+//   db.user.find(composition.userId).then(function(user) {
+//     composition.composerName = user.firstname + " " + user.lastname;
 
-      // user is on Facebook
-    db.provider.find({where: {userId: user.id}}).then(function(provider) {
-      if (provider.type == 'facebook') {
-        var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
-        composition.picUrl = picUrl;
-      }
-      callback();
+//       // user is on Facebook
+//     db.provider.find({where: {userId: user.id}}).then(function(provider) {
+//       if (provider.type == 'facebook') {
+//         var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
+//         composition.picUrl = picUrl;
+//       }
+//       callback();
 
-      // user is not on Facebook
-    }).catch(function(error) {
-      callback();
-    })
+//       // user is not on Facebook
+//     }).catch(function(error) {
+//       callback();
+//     })
 
-  }).catch(function(error) {
-    callback(error);
-  });
-}
+//   }).catch(function(error) {
+//     callback(error);
+//   });
+// }
 
   // add critic name, if found
 var addCriticName = function(critique, callback) {

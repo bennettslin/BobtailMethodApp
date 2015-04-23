@@ -20,6 +20,8 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 + Add bio to about page
 + Connect play buttons in howto page
 + Have key signature default to C major
++ pagination
++ double quotes!!
 
 ### Known knowns
 + Users should be able to update profiles, including uploading cover pictures.
