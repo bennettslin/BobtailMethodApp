@@ -189,28 +189,58 @@ app.use(function(req, res, next) {
 
     var signatures = ["D\u266D", "A\u266D", "E\u266D", "B\u266D", "F", "C", "G", "D", "A", "E", "B", "G\u266D"];
 
-    var chordRoots = ["A", "A\u266F/B\u266D", "B", "C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D", "G", "G\u266F/A\u266D"];
+    var chordRoots = ["C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D", "G", "G\u266F/A\u266D", "A", "A\u266F/B\u266D", "B"];
 
-      // FIXME: change "-" and "+" to -1
-      // FIXME: chord roots are offset
-      // add chord types
-      // consider accidentals based on keys
+    var chordTypes = ["", "m", "aug", "dim"];
+
+      // FIXME: consider flat or sharp based on keys, for both chord roots and notes
       // consider note durations
+      // consider naturals
+      // if there's an eighth note rest, add spaces to avoid beaming across rest
 
-    var letterPitches = ["x", "A,", "_B,", "B,", "C", "_D", "D", "_E", "E", "F", "_G", "G", "_A", "A", "_B", "B", "c", "_d", "d", "_e", "e", "f", "_g", "g", "_a", "a" ];
-
-    var keys = [];
-    for (var i = 0; i < 3; i++) {
-      keys.push(chordRoots[composition.keys[i]]);
-    }
-
-    var notes = [];
-    for (var i = 0; i < 6; i++) {
-      notes.push(letterPitches[composition.activePitches[i * 3] + 1] + letterPitches[composition.activePitches[i * 3 + 1] + 1] + letterPitches[composition.activePitches[i * 3 + 2] + 1]);
-    }
+    var letterPitches = ["A,", "_B,", "B,", "C", "_D", "D", "_E", "E", "F", "_G", "G", "_A", "A", "_B", "B", "c", "_d", "d", "_e", "e", "f", "_g", "g", "_a", "a" ];
 
     var signature = signatures[composition.signature];
-    return 'K:' + signature + 'enter"' + keys[0] + '" ' + notes[0] + ' ' + notes[1] + ' | "' + keys[1] + '" ' + notes[2] + ' ' + notes[3] + ' | "' + keys[2] + '" ' + notes[4] + ' ' + notes[5];
+
+      // chord symbols
+    var chords = [];
+    for (var i = 0; i < 3; i++) {
+      var chord = "";
+      var rootInteger = composition.keys[i];
+      if (isNaN(rootInteger)) {
+        chords.push("");
+      } else {
+        chordRoots[rootInteger];
+        var chordTypeInteger = composition.activeChords[i];
+        if (isNaN(chordTypeInteger)) {
+          chords.push('"' + chordRoots[rootInteger] + '" ');
+        } else {
+          chords.push('"' + chordRoots[rootInteger] + chordTypes[chordTypeInteger] + '" ');
+        }
+      }
+    }
+
+      // notes
+    var notes = [];
+    for (var i = 0; i < 6; i++) {
+      var halfBar = "";
+      for (var j = 0; j < 3; j++) {
+        var noteInteger = composition.activePitches[i * 3 + j];
+        if (isNaN(noteInteger)) {
+          halfBar = halfBar.concat("z")
+
+          // add rest
+        } else {
+          halfBar = halfBar.concat(letterPitches[noteInteger]);
+        }
+      }
+
+      notes.push(halfBar);
+    }
+
+    var returnString = 'K:' + signature + 'enter' + chords[0] + notes[0] + ' ' + notes[1] + ' | ' + chords[1] + notes[2] + ' ' + notes[3] + ' | ' + chords[2] + notes[4] + ' ' + notes[5];
+    console.log(returnString);
+    return returnString;
   }
   next();
 })

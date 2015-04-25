@@ -23,6 +23,7 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 + let user add composition title
 + allow New from Copy option
 + methods for code to abc and abc to code
++ delete button doesn't delete notation
 
 ### Known knowns
 + Users should be able to add titles and descriptions to compositions, and update them. They should also be able to delete their own critiques, as well as those left by others.
