@@ -19,7 +19,7 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 ## Things left to fix
 + Add bio to about page
 + Connect play buttons in howto page
-+ pagination
++ pagination later, just show last ten for now
 + let user add composition title
 + allow New from Copy option
 + methods for code to abc and abc to code
