@@ -107,6 +107,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+/*
+about abc notation:
+
+X: is internal reference number
+M: is the meter
+L: is the base note duration, C2 is twice the base note duration
+K: is the key
+
+"C" is the chord symbol, use C, Cm, Caug, Cdim only
+C, to B, is C3 to B3
+C to B is C4 to B4
+c to b is C5 to B5
+^C is C-shart, =C is C-natural, _C is C-flat
+
+| is a barline
+|] is the end barline
+
+for more, consult http://abcnotation.com/wiki/abc:standard:v2.1
+*/
+
 app.use(function(req, res, next) {
   req.getCompositionFromCode = function(code) {
     code = code.toUpperCase();

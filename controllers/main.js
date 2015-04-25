@@ -28,6 +28,11 @@ var addComposerName = function(composition, callback) {
 
 router.get("/", function(req, res) {
   db.composition.findAll().then(function(compositions) {
+
+    compositions.forEach(function(composition) {
+      composition.abc = req.getAbcFromCode(composition.melody);
+    });
+
     async.each(compositions, addComposerName, function(error) {
       if (!error) {
         res.render("main/index", {compositions: compositions});

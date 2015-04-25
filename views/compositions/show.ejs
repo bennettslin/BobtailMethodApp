@@ -5,7 +5,14 @@
       <div class="avatar margin-right"><img src="<%= composition.picUrl %>" class="avatar-image"></div>
     <% } %>
     <h1><%= composition.composerName %>'s composition</h1>
-    <% include ../partials/staff %>
+
+    <div id="abc-<%= composition.id %>" class="abc"></div>
+    <script type="text/javascript">
+      var string = ('%%staffwidth 400\nX:' + '<%= composition.id %>' + '\nM:none\nL:1/8\n' + '<%= composition.abc %>').replace("enter", "\n").replace(/&#34;/g, '\"');
+      console.log(string);
+      ABCJS.renderAbc('abc-<%= composition.id %>', string, {}, {staffwidth: 475, add_classes: true}, {});
+    </script>
+
     <% include ../partials/grid %>
   </div>
   <div class="col-sm-2">

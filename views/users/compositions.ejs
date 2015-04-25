@@ -5,9 +5,9 @@
     <div class="avatar margin-right"><img src="<%= user.picUrl %>" class="avatar-image"></div>
   <% } %>
   <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
-    <h1><%= user.firstname + " " + user.lastname %>'s compositions (you)</h1>
+    <h1>My compositions</h1>
   <% } else { %>
-    <h1><%= user.firstname + " " + user.lastname %>'s compositions</h1>
+    <h1><%= user.firstname %>'s compositions</h1>
   <% } %>
   <table class="table">
     <thead>
@@ -22,12 +22,9 @@
     <% user.compositions.forEach(function(composition) { %>
       <tr>
         <td colspan="3">
-          <div id="abc-<%= composition.id %>" class="abc"></div>
-          <script type="text/javascript">
-            var string = ('%%staffwidth 400\nX:' + '<%= composition.id %>' + '\nM:none\nL:1/8\n' + '<%= composition.abc %>').replace("enter", "\n").replace(/&#34;/g, '\"');
-            console.log(string);
-            ABCJS.renderAbc('abc-<%= composition.id %>', string, {}, {staffwidth: 475, add_classes: true}, {});
-          </script>
+
+          <% include ../partials/staff_index %>
+
         </td>
       </tr>
       <tr>

@@ -1,0 +1,7 @@
+<!-- turn this into a partial (identical with users/compositions) -->
+<div id="abc-<%= composition.id %>" class="abc"></div>
+<script type="text/javascript">
+  var string = ('%%staffwidth 400\nX:' + '<%= composition.id %>' + '\nM:none\nL:1/8\n' + '<%= composition.abc %>').replace("enter", "\n").replace(/&#34;/g, '\"');
+  console.log(string);
+  ABCJS.renderAbc('abc-<%= composition.id %>', string, {}, {staffwidth: 475, add_classes: true}, {});
+</script>
