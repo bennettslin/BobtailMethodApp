@@ -22,8 +22,8 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 + pagination later, just show last ten for now
 + let user add composition title
 + allow New from Copy option
-+ methods for code to abc and abc to code
-+ delete button doesn't delete notation
++ method for code to abc, maybe have it taken care of in script.js rather than controller
++ delete button doesn't delete notation because it's a different row (will need to figure out layout first)
 
 ### Known knowns
 + Users should be able to add titles and descriptions to compositions, and update them. They should also be able to delete their own critiques, as well as those left by others.

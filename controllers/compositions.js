@@ -52,7 +52,7 @@ router.post("/mail", function(req, res) {
   // user posts composition data to save to database
 router.post("/", function(req, res) {
   var loggedInUser = req.user;
-  if (loggedInUser) {
+  if (loggedInUser && req.body["button-status"] == "publish") {
     db.user.find(loggedInUser.id).then(function(user) {
 
       // user found
@@ -67,9 +67,21 @@ router.post("/", function(req, res) {
       res.redirect("/");
     });
 
+    // new from copy
   } else {
-    req.flash("danger", "You cannot save a composition without being logged in.");
-    res.redirect("/");
+
+    // fixme: not DRY; repeats renderCompositionsShow code
+    var composition = {melody: req.body["composition-string"]};
+    var compositionObject = req.getCompositionFromCode(composition.melody);
+    if (compositionObject) {
+      compositionObject.composition = composition;
+      compositionObject.status = "copy";
+      res.render("compositions/new", compositionObject);
+
+      // this should never happen if input comes from grid interface
+    } else {
+      res.render("compositions/new", {status: "copy"});
+    }
   }
 
 });
