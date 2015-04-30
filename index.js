@@ -206,9 +206,9 @@ app.use(function(req, res, next) {
       return 'K:C\\n x3 x3 | x3 x3 | x3 x3';
     }
 
-    var signatures = ["D\u266D", "A\u266D", "E\u266D", "B\u266D", "F", "C", "G", "D", "A", "E", "B", "G\u266D"];
+    var signatures = ["Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "Gb"];
 
-    var chordRoots = ["C", "C\u266F/D\u266D", "D", "D\u266F/E\u266D", "E", "F", "F\u266F/G\u266D", "G", "G\u266F/A\u266D", "A", "A\u266F/B\u266D", "B"];
+    var chordRoots = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
 
     var chordTypes = ["", "m", "aug", "dim"];
 

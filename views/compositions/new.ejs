@@ -7,6 +7,14 @@
       <!-- abc staff notation, loaded and updated in script.js -->
       <div id="new-abc" class="abc"></div>
 
+    <% if (typeof composition != "undefined") { %>
+      <script type="text/javascript">
+        var string = ('X:0' + '\nM:none\nL:1/8\n' + '<%= composition.abc %>').replace("enter", "\n").replace(/&#34;/g, '\"');
+        console.log(string);
+        ABCJS.renderAbc('new-abc', string, {}, {staffwidth: 525, add_classes: true}, {});
+      </script>
+    <% } %>
+
       <% include ../partials/grid %>
     </div>
     <div class="col-sm-2">

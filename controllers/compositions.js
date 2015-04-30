@@ -6,6 +6,7 @@ var async = require('async');
   // if composition is from code, add it
 var renderCompositionsShow = function(composition, req, res) {
   var compositionObject = req.getCompositionFromCode(composition.melody);
+
   if (compositionObject) {
     compositionObject.composition = composition;
     res.render("compositions/show", compositionObject);
@@ -71,14 +72,16 @@ router.post("/", function(req, res) {
   } else {
 
     // fixme: not DRY; repeats renderCompositionsShow code
-    var composition = {melody: req.body["composition-string"]};
+    var composition = {melody: req.body["composition-string"], id: 0};
+    composition.abc = req.getAbcFromCode(composition.melody);
     var compositionObject = req.getCompositionFromCode(composition.melody);
+
     if (compositionObject) {
       compositionObject.composition = composition;
       compositionObject.status = "copy";
       res.render("compositions/new", compositionObject);
 
-      // this should never happen if input comes from grid interface
+      // technically, this should never happen if input comes from grid interface
     } else {
       res.render("compositions/new", {status: "copy"});
     }
