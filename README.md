@@ -19,7 +19,6 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 ## Things left to fix
 + Add bio to about page
 + Connect play buttons in howto page
-+ pagination later, just show last ten for now
 + let user add composition title
 + new from copy option works, but doesn't render notation (revisit; I am confusing new with create method)
 + method for code to abc, maybe have it taken care of in script.js rather than controller

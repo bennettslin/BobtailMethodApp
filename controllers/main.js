@@ -27,7 +27,7 @@ var addComposerName = function(composition, callback) {
 }
 
 router.get("/", function(req, res) {
-  db.composition.findAll().then(function(compositions) {
+  db.composition.findAll({limit: 20, order: '"createdAt" DESC'}).then(function(compositions) {
 
     compositions.forEach(function(composition) {
       composition.abc = req.getAbcFromCode(composition.melody);
@@ -38,12 +38,12 @@ router.get("/", function(req, res) {
         res.render("main/index", {compositions: compositions});
       } else {
         req.flash("danger", "Unable to find all composers.")
-        res.redirect("/main/about");
+        res.redirect("/about");
       }
     });
   }).catch(function(error) {
     req.flash("danger", "Unable to find all compositions.");
-    res.redirect("/main/about");
+    res.redirect("/about");
   });
   // res.render("main/index");
   // res.redirect("/compositions/index");
