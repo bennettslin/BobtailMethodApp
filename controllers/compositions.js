@@ -4,14 +4,18 @@ var router = express.Router();
 var async = require('async');
 
   // if composition is from code, add it
-var renderCompositionsShow = function(composition, req, res) {
+var renderComposition = function(composition, req, res, page) {
+  composition.abc = req.getAbcFromCode(composition.melody);
+  composition.status = page;
+  // not DRY, get abc from code method already gets composition from code
   var compositionObject = req.getCompositionFromCode(composition.melody);
 
   if (compositionObject) {
     compositionObject.composition = composition;
-    res.render("compositions/show", compositionObject);
+    res.render("compositions/" + page, compositionObject);
+
   } else {
-    res.render("compositions/show", {composition: composition});
+    res.render("compositions/" + page, {composition: composition});
   }
 }
 
@@ -36,7 +40,8 @@ var addCriticName = function(critique, callback) {
 
   // get form to create new composition
 router.get("/new", function(req, res) {
-  res.render("compositions/new");
+  // res.render("compositions/new");
+  renderComposition({id:0, melody:""}, req, res, "new");
 });
 
 // FIXME: make this a global variable
@@ -71,20 +76,9 @@ router.post("/", function(req, res) {
     // new from copy
   } else {
 
-    // fixme: not DRY; repeats renderCompositionsShow code
+    // fixme: not DRY; repeats renderComposition code
     var composition = {melody: req.body["composition-string"], id: 0};
-    composition.abc = req.getAbcFromCode(composition.melody);
-    var compositionObject = req.getCompositionFromCode(composition.melody);
-
-    if (compositionObject) {
-      compositionObject.composition = composition;
-      compositionObject.status = "copy";
-      res.render("compositions/new", compositionObject);
-
-      // technically, this should never happen if input comes from grid interface
-    } else {
-      res.render("compositions/new", {status: "copy"});
-    }
+    renderComposition(composition, req, res, "new");
   }
 
 });
@@ -95,8 +89,6 @@ router.get("/:id", function(req, res) {
   console.log("params is", req.params.id);
   db.composition.find(req.params.id).then(function(composition) {
 
-    composition.abc = req.getAbcFromCode(composition.melody);
-
     db.critique.findAll({where: {compositionId: composition.id}}).then(function(critiques) {
       critiques = critiques || [];
       async.each(critiques, addCriticName, function(error) {
@@ -104,15 +96,16 @@ router.get("/:id", function(req, res) {
           composition.critiques = critiques;
           db.user.find(composition.userId).then(function(user) {
             composition.composerName = user.firstname + " " + user.lastname;
+
             db.provider.find({where: {userId: user.id}}).then(function(provider) {
               if (provider.type == 'facebook') {
                 var picUrl = "http://graph.facebook.com/" + provider.pid + "/picture";
                 composition.picUrl = picUrl;
-                renderCompositionsShow(composition, req, res);
+                renderComposition(composition, req, res, "show");
               }
 
             }).catch(function(error) {
-              renderCompositionsShow(composition, req, res);
+              renderComposition(composition, req, res, "show");
             })
           })
         }

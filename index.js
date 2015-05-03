@@ -203,7 +203,7 @@ app.use(function(req, res, next) {
       // get object with pitches (activePitches), chord roots (keys), chord types (chords), and key signature(signature)
     var composition = req.getCompositionFromCode(code);
     if (!composition) {
-      return 'K:C\\n x3 x3 | x3 x3 | x3 x3';
+      return 'K:C\\n z3 z3 | z3 z3 | z3 z3';
     }
 
     var signatures = ["Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "Gb"];
@@ -316,6 +316,13 @@ app.get("/:code", function(req, res) {
     req.flash("danger", "This is not a valid composition!");
     res.redirect("/");
   } else {
+    var composition = {
+      melody: stringCode,
+      abc: req.getAbcFromCode(stringCode),
+      status: "show",
+      id: 0
+    }
+    compositionObject.composition = composition
     res.render("compositions/code", compositionObject);
   }
 });

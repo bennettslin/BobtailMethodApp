@@ -6,14 +6,7 @@
     <% } %>
     <h1><%= composition.composerName %>'s composition</h1>
 
-    <!-- abc staff notation -->
-    <div id="abc-<%= composition.id %>" class="abc"></div>
-    <script type="text/javascript">
-      var string = ('X:' + '<%= composition.id %>' + '\nM:none\nL:1/8\n' + '<%= composition.abc %>').replace("enter", "\n").replace(/&#34;/g, '\"');
-      console.log(string);
-      ABCJS.renderAbc('abc-<%= composition.id %>', string, {}, {staffwidth: 525, add_classes: true}, {});
-    </script>
-
+    <% include ../partials/staff_show %>
     <% include ../partials/grid %>
   </div>
   <div class="col-sm-2">

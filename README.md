@@ -20,7 +20,6 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 + Add bio to about page
 + Connect play buttons in howto page
 + let user add composition title
-+ new from copy option works, but doesn't render notation (revisit; I am confusing new with create method)
 + method for code to abc, maybe have it taken care of in script.js rather than controller
 + delete button doesn't delete notation because it's a different row (will need to figure out layout first)
 

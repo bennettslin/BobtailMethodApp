@@ -11,7 +11,6 @@ $(function() {
 
       // initially load blank notation
     var string = ('X:' + '0' + '\nM:6/8\nL:1/8\n' + 'K: C enter z3 z3 | z3 z3 | z3 z3').replace("enter", "\n").replace(/&#34;/g, '\"');
-    console.log(string);
 
       // FIXME: not sure why it doesn't allow staff width wider than this
     ABCJS.renderAbc('new-abc', string, {}, {staffwidth: 575, add_classes: true}, {});
