@@ -63,7 +63,7 @@ router.post("/", function(req, res) {
 
       // user found
       db.composition.create({melody: req.body["composition-string"],
-                             userId: user.id}).then(function(composition) {
+                             userId: user.id, title: req.body["composition-title"]}).then(function(composition) {
         req.flash("success", "Composition saved!");
         res.redirect("users/compositions/" + user.id);
       });

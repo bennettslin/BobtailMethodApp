@@ -1,7 +1,7 @@
 <div class="col-sm-2">
-
   <form id="composition-form" class="form" action="/compositions" method="post">
-    <input class="composition-string" type="hidden" class="form-control" name="composition-string">
+  <input type="hidden" id="composition-title-hidden" name="composition-title">
+    <input type="hidden" class="form-control composition-string" name="composition-string">
     <% if (((typeof activePitches == 'undefined' && typeof status == 'undefined') ||
             (typeof activePitches != 'undefined' && typeof status != 'undefined')) && loggedInUser) { %>
       <input type="hidden" class="form-control" name="button-status" value="publish">

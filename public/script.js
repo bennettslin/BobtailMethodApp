@@ -106,6 +106,7 @@ $(function() {
   $('#composition-form').on('submit', function(event) {
     var melodyString = getMelodyString();
     $('.composition-string').val(melodyString);
+    $('#composition-title-hidden').val($('#composition-title').val());
   })
 
     // mail composition button

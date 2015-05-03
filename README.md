@@ -17,11 +17,11 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 + Web Audio API.
 
 ## Things left to fix
-+ Add bio to about page
 + Connect play buttons in howto page
 + let user add composition title
 + method for code to abc, maybe have it taken care of in script.js rather than controller
 + delete button doesn't delete notation because it's a different row (will need to figure out layout first)
++ make responsive!
 
 ### Known knowns
 + Users should be able to add titles and descriptions to compositions, and update them. They should also be able to delete their own critiques, as well as those left by others.

@@ -1,15 +1,14 @@
 <% include ../partials/header %>
 
+  <div class="col-sm-8 col-sm-offset-2">
+    <h1><input id="composition-title" type="text" placeholder='<%= typeof loggedInUser != 'undefined' && loggedInUser ? loggedInUser.firstname + "'s new composition" : "New composition"%>'></h1>
 
-    <div class="col-sm-8 col-sm-offset-2">
-      <h1>New composition</h1>
+    <% include ../partials/staff_show %>
+    <% include ../partials/grid %>
+  </div>
 
-      <% include ../partials/staff_show %>
-      <% include ../partials/grid %>
-    </div>
-
-    <div class="col-sm-2">
-      <% include ../partials/sidebar %>
-    </div>
+  <div class="col-sm-2">
+    <% include ../partials/sidebar %>
+  </div>
 
 <% include ../partials/footer %>

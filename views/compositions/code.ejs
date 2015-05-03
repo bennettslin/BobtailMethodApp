@@ -1,8 +1,7 @@
 <% include ../partials/header %>
 
-
   <div class="col-sm-8 col-sm-offset-2">
-    <h1>Coded composition</h1>
+    <h1><%= composition.title != null ? composition.title : "Coded composition" %></h1>
     <% include ../partials/staff_show %>
     <% include ../partials/grid %>
   </div>
