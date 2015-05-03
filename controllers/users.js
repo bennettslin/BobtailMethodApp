@@ -78,7 +78,7 @@ router.get("/friends/:id", function(req, res) {
 
 router.get("/compositions/:id", function(req, res) {
   db.user.find(req.params.id).then(function(user) {
-    db.composition.findAll({where: {userId: user.id}}).then(function(compositions) {
+    db.composition.findAll({where: {userId: user.id}, order: '"createdAt" DESC'}).then(function(compositions) {
       compositions = compositions || [];
 
       compositions.forEach(function(composition) {

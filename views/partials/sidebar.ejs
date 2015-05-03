@@ -1,12 +1,14 @@
 <div class="col-sm-2">
   <form id="composition-form" class="form" action="/compositions" method="post">
-  <input type="hidden" id="composition-title-hidden" name="composition-title">
+  <input type="hidden" id="composition-title-hidden" name="composition-title" value="<%= composition.title != null ? composition.title : ''%>">
     <input type="hidden" class="form-control composition-string" name="composition-string">
-    <% if (((typeof activePitches == 'undefined' && typeof status == 'undefined') ||
-            (typeof activePitches != 'undefined' && typeof status != 'undefined')) && loggedInUser) { %>
+
+    <% if (composition.status != "show" && loggedInUser) { %>
       <input type="hidden" class="form-control" name="button-status" value="publish">
       <button class="btn btn-primary">Publish!</button>
-    <% } else if (composition.status == "show") { %>
+    <% } %>
+
+    <% if (composition.status == "show") { %>
       <input type="hidden" class="form-control" name="button-status" value="copy">
       <button class="btn btn-primary">New from copy</button>
     <% } %>

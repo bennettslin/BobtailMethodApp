@@ -1,7 +1,7 @@
 <% include ../partials/header %>
 
   <div class="col-sm-8 col-sm-offset-2">
-    <h1><input id="composition-title" type="text" placeholder='<%= typeof loggedInUser != 'undefined' && loggedInUser ? loggedInUser.firstname + "'s new composition" : "New composition"%>'></h1>
+    <h1><input id="composition-title" type="text" placeholder="<%= typeof loggedInUser != 'undefined' && loggedInUser ? loggedInUser.firstname + "'s new composition" : "New composition" %>" value="<%= composition.title != null ? composition.title : ''%>"></h1>
 
     <% include ../partials/staff_show %>
     <% include ../partials/grid %>

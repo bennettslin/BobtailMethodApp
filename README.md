@@ -18,7 +18,8 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 
 ## Things left to fix
 + Connect play buttons in howto page
-+ let user add composition title
++ title needs to reflect after new from copy
++ title needs to be in string
 + method for code to abc, maybe have it taken care of in script.js rather than controller
 + delete button doesn't delete notation because it's a different row (will need to figure out layout first)
 + make responsive!

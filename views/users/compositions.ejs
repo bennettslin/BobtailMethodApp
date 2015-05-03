@@ -29,7 +29,7 @@
       </tr>
       <tr>
         <td><button data-id="<%= composition.melody %>" class="playback-button play btn btn-primary"><i class="glyphicon glyphicon-play"></i></button></td>
-        <td><a href="/compositions/<%= composition.id %>"><%= composition.melody %></a></td>
+        <td><a href="/compositions/<%= composition.id %>"><%= composition.title != null && composition.title.length > 0 ? composition.title : "Composition " + composition.id %></a></td>
         <% if (typeof loggedInUser != 'undefined' && loggedInUser.email == user.email) { %>
           <td><button data-id="/compositions/<%= composition.id %>" class="delete-button btn btn-danger"><i class="glyphicon glyphicon-remove"></i></button></td>
         <% } %>
