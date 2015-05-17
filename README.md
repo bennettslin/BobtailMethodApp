@@ -18,11 +18,13 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 
 ## Things left to fix
 + Connect play buttons in howto page
-+ title needs to reflect after new from copy
-+ title needs to be in string
++ versioning of copy needs to be consistent
++ handle null and empty titles consistently and gracefully
++ title needs to be in string code
 + method for code to abc, maybe have it taken care of in script.js rather than controller
 + delete button doesn't delete notation because it's a different row (will need to figure out layout first)
 + make responsive!
++ change user scores
 
 ### Known knowns
 + Users should be able to add titles and descriptions to compositions, and update them. They should also be able to delete their own critiques, as well as those left by others.

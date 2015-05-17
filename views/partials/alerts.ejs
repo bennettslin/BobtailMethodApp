@@ -1,7 +1,9 @@
 <% if (typeof alerts != 'undefined') { %>
   <% for (key in alerts) { %>
     <% alerts[key].forEach(function(message) { %>
-      <div class="col-sm-8 col-sm-offset-2 alert alert-<%= key %>"><%= message %></div>
+      <div class="col-sm-6 col-sm-offset-3 alert alert-<%= key %>">
+        <%= message %>
+      </div>
     <% }); %>
   <% } %>
 <% } %>

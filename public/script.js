@@ -3,7 +3,7 @@ $(function() {
 
     // FIXME: should get melody string from interface, then convert melody string to object, then convert object to abc notation, then finally render notation
   var renderAbc = function() {
-    ABCJS.renderAbc('new-abc', getMelodyString(), {}, {staffwidth: 575, add_classes: true}, {});
+    ABCJS.renderAbc('new-abc', getMelodyString(), {}, {staffwidth: $(".staff-container").width() * 0.95, add_classes: true}, {});
   };
 
     // dynamically update music notation
@@ -12,8 +12,10 @@ $(function() {
       // initially load blank notation
     var string = ('X:' + '0' + '\nM:6/8\nL:1/8\n' + 'K: C enter z3 z3 | z3 z3 | z3 z3').replace("enter", "\n").replace(/&#34;/g, '\"');
 
+    console.log("staff container is ", $(".staff-container").width());
+
       // FIXME: not sure why it doesn't allow staff width wider than this
-    ABCJS.renderAbc('new-abc', string, {}, {staffwidth: 575, add_classes: true}, {});
+    ABCJS.renderAbc('new-abc', string, {}, {staffwidth: $(".staff-container").width() * 0.95, add_classes: true}, {});
 
       // check key signature
     $('.select-signature').on('change', function() {
@@ -53,9 +55,13 @@ $(function() {
       method:'DELETE',
       url:myUrl
     }).done(function(data) {
-      deleteButton.closest('tr').fadeOut('slow', function() {
+      var myTr = deleteButton.closest('tr');
+      var nextTr = myTr.next('tr');
+
+      myTr.fadeOut('slow', function() {
         $(this).remove();
       });
+      nextTr.fadeOut('slow');
     });
   });
 

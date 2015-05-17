@@ -4,5 +4,5 @@
 <script type="text/javascript">
   var string = ('X:' + '<%= composition.id %>' + '\nM:none\nL:1/8\n' + '<%= composition.abc %>').replace("enter", "\n").replace(/&#34;/g, '\"');
   console.log(string);
-  ABCJS.renderAbc('abc-<%= composition.id %>', string, {}, {staffwidth: 525, add_classes: true}, {});
+  ABCJS.renderAbc('abc-<%= composition.id %>', string, {}, {staffwidth: $(".staff-container").width() * 0.95, add_classes: true}, {});
 </script>

@@ -78,7 +78,10 @@ router.post("/", function(req, res) {
 
     // fixme: not DRY; repeats renderComposition code
     console.log("composition title is", req.body["composition-title"]);
-    var composition = {melody: req.body["composition-string"], id: 0, title: req.body["composition-title"] + " (copy)"};
+    var title = req.body["composition-title"];
+
+
+    var composition = {melody: req.body["composition-string"], id: 0, title: title + " (copy)"};
     renderComposition(composition, req, res, "new");
   }
 

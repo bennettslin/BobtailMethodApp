@@ -45,7 +45,7 @@
         <% if (j == 25) { %>
           <div class="meter-symbol <%= i != 18 && i % 6 == 0 ? "margin-right" : "" %>"><%= ((i - 1) % 3) == 0 ? ((i - 1) % 6 == 0 ? "one" : "two") : ((i - 1) % 3) + 1 %></div>
         <% } else { %>
-        <% var xBin = i % 2 == 0 ? "even" : "odd"; %>
+        <% var xBin = (i + j) % 2 == 0 ? "even" : "odd"; %>
         <% var jMod = j % 12 %>
         <% var yBin = (jMod == 1 || jMod == 4 || jMod == 6 || jMod == 9 || jMod == 11) ? "black" : "white"; %>
         <a data-x="<%= i %>" data-y="<%= j %>" class="btn cell cell-x-<%= i %> cell-<%= xBin %>-<%= yBin %> <%= jMod == 3 ? "margin-bottom" : "" %> <%= i != 18 && i % 6 == 0 ? "margin-right" : "" %> <%=(typeof activePitches != "undefined" && activePitches[i - 1] == j ? "active" : "") %> <%=(composition.status == "show" ? "locked" : "") %>"></a>
