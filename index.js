@@ -203,7 +203,7 @@ app.use(function(req, res, next) {
       // get object with pitches (activePitches), chord roots (keys), chord types (chords), and key signature(signature)
     var composition = req.getCompositionFromCode(code);
     if (!composition) {
-      return 'K:C\\n z3 z3 | z3 z3 | z3 z3';
+      return 'K:C\\n zzz zzz | zzz zzz | zzz zzz';
     }
 
     var signatures = ["Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "Gb"];

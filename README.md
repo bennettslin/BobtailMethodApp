@@ -19,10 +19,8 @@ Because the melody is brief, there are only play and stop buttons. The user comp
 ## Things left to fix
 + Connect play buttons in howto page
 + versioning of copy needs to be consistent
-+ handle null and empty titles consistently and gracefully
 + title needs to be in string code
 + method for code to abc, maybe have it taken care of in script.js rather than controller
-+ delete button doesn't delete notation because it's a different row (will need to figure out layout first)
 + make responsive!
 + change user scores
 

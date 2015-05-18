@@ -162,11 +162,11 @@ h2 {
   margin-right: 0;
 }
 
-a.cell.margin-bottom {
+.margin-bottom {
   margin-bottom: 10px;
 }
 
-a.cell.margin-right {
+.margin-right {
   margin-right: 16px;
 }
 
@@ -239,6 +239,10 @@ footer {
 
 fieldset {
 
+}
+
+#composition-title {
+  text-align: center;
 }
 
 .form-button {

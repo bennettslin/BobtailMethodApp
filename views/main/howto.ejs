@@ -11,7 +11,7 @@
 
       <div id="howto-abc-<%= i %>" class="abc-index"></div>
       <script type="text/javascript">
-        ABCJS.renderAbc('howto-abc-<%= i %>', 'X:' + '<%= i %>' + '\\nM:none\\nL:1/8\\n' + '<%= abcArray[i] %>'.replace(/&#34;/g, '\"'), {}, {staffwidth: 475, add_classes: true}, {});
+        ABCJS.renderAbc('howto-abc-<%= i %>', '<%= abcArray[i] %>'.replace(/&#34;/g, '\"'), {}, {staffwidth: 475, add_classes: true}, {});
       </script>
 
       <button data-id='<%= dataIdArray[i] %>' class="playback-button btn btn-primary play"><i class="glyphicon glyphicon-play"></i></button>

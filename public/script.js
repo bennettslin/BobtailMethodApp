@@ -1,21 +1,23 @@
-
 $(function() {
 
     // FIXME: should get melody string from interface, then convert melody string to object, then convert object to abc notation, then finally render notation
   var renderAbc = function() {
-    ABCJS.renderAbc('new-abc', getMelodyString(), {}, {staffwidth: $(".staff-container").width() * 0.95, add_classes: true}, {});
+    console.log("render abc called.");
+    var melodyString = getAbcFromCode(getMelodyString());
+    var string = ('X:' + '0' + '\nM:none\nL:1/8\n' + melodyString).replace("enter", "\n").replace(/&#34;/g, '\"');
+    console.log("melody string is", string);
+
+    ABCJS.renderAbc('abc-0', string, {}, {staffwidth: $(".staff-container").width() * 0.95, add_classes: true}, {});
   };
 
     // dynamically update music notation
   $.getScript("/abcjs_basic_latest-min.js", function(data) {
 
       // initially load blank notation
-    var string = ('X:' + '0' + '\nM:6/8\nL:1/8\n' + 'K: C enter z3 z3 | z3 z3 | z3 z3').replace("enter", "\n").replace(/&#34;/g, '\"');
+    var string = ('X:' + '0' + '\nM:6/8\nL:1/8\n' + 'K: C enter zzz zzz | zzz zzz | zzz zzz').replace("enter", "\n").replace(/&#34;/g, '\"');
 
     console.log("staff container is ", $(".staff-container").width());
-
-      // FIXME: not sure why it doesn't allow staff width wider than this
-    ABCJS.renderAbc('new-abc', string, {}, {staffwidth: $(".staff-container").width() * 0.95, add_classes: true}, {});
+    ABCJS.renderAbc('abc-0', string, {}, {staffwidth: $(".staff-container").width() * 0.95, add_classes: true}, {});
 
       // check key signature
     $('.select-signature').on('change', function() {
@@ -41,7 +43,6 @@ $(function() {
         renderAbc();
       }
     });
-
   });
 
   $('.delete-button').on('click', function(event) {
@@ -303,3 +304,156 @@ $(function() {
     }
   }
 })
+
+// FIXME: Totally not DRY! Repeats methods in index.js
+var getCompositionFromCode = function(code) {
+  code = code.toUpperCase();
+  var keys = [];
+  var chords = [];
+  var pitches = [];
+  var signature;
+
+    // string literal fails if less than 24 characters
+  if (code.length < 25) {
+    return false;
+  } else {
+
+    // first character is key signature
+    var codedSign = code.charCodeAt(0) - 65;
+    if (!isNaN(codedSign) && codedSign >= 0 && codedSign < 12) {
+      signature = codedSign;
+    } else {
+      return false;
+    }
+
+      // next 6 characters are chord roots and types
+    for (var i = 1; i < 7; i++) {
+
+        // this is a chord root
+      if (i % 2 == 1) {
+        if (code[i] == '+') {
+          keys.push(code[i]);
+        } else {
+          var key = code.charCodeAt(i) - 65;
+          if (!isNaN(key) && key >= 0 && key < 12) {
+            keys.push(key);
+          } else {
+            return false;
+          }
+        }
+
+        // this is a chord type
+      } else {
+        if (code[i] == '+') {
+          chords.push(code[i]);
+        } else {
+          var chord = code.charCodeAt(i) - 65;
+          if (!isNaN(chord) && chord >= 0 && chord < 4) {
+            chords.push(chord);
+          } else {
+            return false;
+          }
+        }
+      }
+    }
+
+      // next 18 characters are notes in the melody
+    for (var i = 7; i < 25; i++) {
+      if (code[i] == '-') {
+        pitches.push(code[i]);
+      } else {
+        var pitch = code.charCodeAt(i) - 65;
+        if (!isNaN(pitch) && pitch >= 0 && pitch <= 24) {
+          pitches.push(pitch);
+        } else {
+          return false;
+        }
+      }
+    }
+    return {activePitches: pitches, keys: keys, activeChords: chords, signature: signature};
+  }
+}
+
+/*
+about abc notation:
+
+X: is internal reference number
+M: is the meter
+L: is the base note duration, C2 is twice the base note duration
+K: is the key
+
+"C" is the chord symbol, use C, Cm, Caug, Cdim only
+C, to B, is C3 to B3
+C to B is C4 to B4
+c to b is C5 to B5
+^C is C-shart, =C is C-natural, _C is C-flat
+
+| is a barline
+|] is the end barline
+
+for more, consult http://abcnotation.com/wiki/abc:standard:v2.1
+*/
+
+var getAbcFromCode = function(code) {
+
+    // get object with pitches (activePitches), chord roots (keys), chord types (chords), and key signature(signature)
+  var composition = getCompositionFromCode(code);
+  if (!composition) {
+    return 'K:C\\n zzz zzz | zzz zzz | zzz zzz';
+  }
+
+  var signatures = ["Db", "Ab", "Eb", "Bb", "F", "C", "G", "D", "A", "E", "B", "Gb"];
+
+  var chordRoots = ["C", "C#/Db", "D", "D#/Eb", "E", "F", "F#/Gb", "G", "G#/Ab", "A", "A#/Bb", "B"];
+
+  var chordTypes = ["", "m", "aug", "dim"];
+
+    // FIXME: consider flat or sharp based on keys, for both chord roots and notes
+    // consider note durations
+    // consider naturals
+    // if there's an eighth note rest, add spaces to avoid beaming across rest
+
+  var letterPitches = ["A,", "_B,", "B,", "C", "_D", "D", "_E", "E", "F", "_G", "G", "_A", "A", "_B", "B", "c", "_d", "d", "_e", "e", "f", "_g", "g", "_a", "a" ];
+
+  var signature = signatures[composition.signature];
+
+    // chord symbols
+  var chords = [];
+  for (var i = 0; i < 3; i++) {
+    var chord = "";
+    var rootInteger = composition.keys[i];
+    if (isNaN(rootInteger)) {
+      chords.push("");
+    } else {
+      chordRoots[rootInteger];
+      var chordTypeInteger = composition.activeChords[i];
+      if (isNaN(chordTypeInteger)) {
+        chords.push('"' + chordRoots[rootInteger] + '" ');
+      } else {
+        chords.push('"' + chordRoots[rootInteger] + chordTypes[chordTypeInteger] + '" ');
+      }
+    }
+  }
+
+    // notes
+  var notes = [];
+  for (var i = 0; i < 6; i++) {
+    var halfBar = "";
+    for (var j = 0; j < 3; j++) {
+      var noteInteger = composition.activePitches[i * 3 + j];
+      if (isNaN(noteInteger)) {
+        halfBar = halfBar.concat("z")
+
+        // add rest
+      } else {
+        halfBar = halfBar.concat(letterPitches[noteInteger]);
+      }
+    }
+
+    notes.push(halfBar);
+  }
+
+  var returnString = 'K:' + signature + 'enter' + chords[0] + notes[0] + ' ' + notes[1] + ' | ' + chords[1] + notes[2] + ' ' + notes[3] + ' | ' + chords[2] + notes[4] + ' ' + notes[5];
+  console.log(returnString);
+  return returnString;
+}

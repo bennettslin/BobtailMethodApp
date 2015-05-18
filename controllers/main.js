@@ -69,7 +69,7 @@ router.get("/howto", function(req, res) {
     "Compound melodies are single melodies that can be separated by the ear into two or more distinct lines occupying different registers:"
   ];
 
-  var keyArray = ['F', 'F', 'A', 'Ab', 'Bb', 'G', 'F'];
+  var keyArray = ['D', 'D', 'D', 'D', 'D', 'F', 'F', 'A', 'Ab', 'Bb', 'G', 'F'];
 
   var rawAbcArray = [
     '"G" x3 x3 | "D" x3 x3 | x3 x3',
@@ -89,11 +89,8 @@ router.get("/howto", function(req, res) {
   var abcArray = [];
 
   for (var i = 0; i < rawAbcArray.length; i++) {
-    if (i < 5) {
-      abcArray.push('K:D\\n' + rawAbcArray[i] + '\\n');
-    } else {
-      abcArray.push('K:' + keyArray[i - 5] + '\\n' + rawAbcArray[i] + '\\n');
-    }
+
+      abcArray.push('K:' + keyArray[i] + '\\n' + rawAbcArray[i] + '\\n');
 
   }
 
@@ -101,18 +98,18 @@ router.get("/howto", function(req, res) {
     // start with melody code, and then get abc from code
 
   var dataIdArray = [
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI",
-    "DCADBEDYXWVUTSRPONMLKJIHI"
+    "HHACA++------------------",
+    "HHACA++KKKOORRRMJJR------",
+    "HHACA++KKKOORRRMJJRQQMQQQ",
+    "HHACAJAKKKOORRRMJJRQQMQQQ",
+    "HHACAJAKKKOQRQQMJTRQHMOOQ",
+    "ECBHBKAMRUWTPMRUWTPMRUWTP",
+    "ECBHBKATTUTPMNNUWTPMRUWYR",
+    "ICAEAJAOQOJJMRLOTRQOOQMLH",
+    "BFBBBABUUTPPQSQLHQPGNKGGG",
+    "DKAFDDAKKMNNPRRPOSURKNPRP",
+    "GHAEAFAWVTRRPOPRUTRTPOMMM",
+    "ECBKBJBRRQMMNPNIENMDKHDDD"
   ]
 
   res.render("main/howto", {instructionArray: instructionArray, abcArray: abcArray, dataIdArray: dataIdArray});
